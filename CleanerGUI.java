@@ -7,43 +7,47 @@ import javax.swing.border.Border;
 
 /**
  * The main GUI for Folder Cleaner.
+ * 
+ * @author Emmett Grebe
+ * @version 2-19-2026
  */
 public class CleanerGUI implements ActionListener {
     // Swing components:
-    static JFrame frame;
-    static JLabel titleLabel, folderLabel, currentFolderLabel;
-    static JPanel titlePanel, selectContainer;
-    static JMenuBar topMenuBar;
-    static JMenu configMenu, helpMenu;
-    static JMenuItem openConfigMenuItem, aboutMenuItem, guideMenuItem;
-    static JFileChooser folderChooser;
-    static JButton chooseBtn, currentBtn;
+    JFrame frame;
+    JLabel titleLabel, folderLabel, currentFolderLabel;
+    JPanel titlePanel, selectContainer;
+    JMenuBar topMenuBar;
+    JMenu configMenu, helpMenu;
+    JMenuItem openConfigMenuItem, aboutMenuItem, guideMenuItem;
+    JFileChooser folderChooser;
+    JButton chooseBtn, currentBtn;
 
     // Numbers:
-    final static Dimension frameStartSize = new Dimension(500, 600);
-    final static Dimension frameMinimumSize = new Dimension(500, 600);
-    final static Color frameColor = new Color(231, 240, 180);
-    final static Color topMenuColor = new Color(167, 173, 130);
-    final static Color topMenuOptionColor = new Color(231, 240, 180);
-    final static Color paddingColor = new Color(167, 173, 130);
-    final static Color btnColor = new Color(241, 245, 196);
+    final Dimension frameStartSize = new Dimension(500, 600);
+    final Dimension frameMinimumSize = new Dimension(500, 600);
+    final Dimension btnSize = new Dimension(200, 100);
+    final Color frameColor = new Color(231, 240, 180);
+    final Color topMenuColor = new Color(167, 173, 130);
+    final Color topMenuOptionColor = new Color(231, 240, 180);
+    final Color paddingColor = new Color(167, 173, 130);
+    final Color btnColor = new Color(241, 245, 196);
 
     // Strings:
-    final static String frameTitleStr = "Folder Cleaner";
-    final static String titleStr = "Welcome to Folder Cleaner";
-    final static String configStr = "Configuration";
-    final static String openConfigStr = "Open configuration";
-    final static String helpStr = "Help";
-    final static String aboutStr = "About";
-    final static String guideStr = "Guide";
-    final static String folderChooseStr = "Select a folder";
-    final static String currentFolderStr = "Use the folder the program is in";
+    final String frameTitleStr = "Folder Cleaner";
+    final String titleStr = "Welcome to Folder Cleaner";
+    final String configStr = "Configuration";
+    final String openConfigStr = "Open configuration";
+    final String helpStr = "Help";
+    final String aboutStr = "About";
+    final String guideStr = "Guide";
+    final String folderChooseStr = "Select a folder";
+    final String currentFolderStr = "Use the folder the program is in";
 
     /**
      * Does all the handler methods in order.
      * Handler methods are seperated by category for ease of finding them.
      */
-    protected static void makeGUI() {
+    public void makeGUI() {
         makeFrame();
         makeTopMenu();
         makeTitle();
@@ -56,7 +60,7 @@ public class CleanerGUI implements ActionListener {
     /**
      * Handles frame creation.
      */
-    private static void makeFrame() {
+    private void makeFrame() {
         // Constructing:
         frame = new JFrame(frameTitleStr);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -79,7 +83,7 @@ public class CleanerGUI implements ActionListener {
      * - About
      * - Guide
      */
-    private static void makeTopMenu() {
+    private void makeTopMenu() {
         // Constructing:
         topMenuBar = new JMenuBar();
         configMenu = new JMenu(configStr);
@@ -107,7 +111,7 @@ public class CleanerGUI implements ActionListener {
     /**
      * Makes the title at the top.
      */
-    private static void makeTitle() {
+    private void makeTitle() {
         // Constructing:
         titlePanel = new JPanel();
         titleLabel = new JLabel(titleStr);
@@ -123,7 +127,7 @@ public class CleanerGUI implements ActionListener {
     /**
      * Makes some padding style to the frame.
      */
-    private static void makePadding() {
+    private void makePadding() {
         // Constructing:
         JPanel paddingLeft = new JPanel();
         JPanel paddingRight = new JPanel();
@@ -140,14 +144,22 @@ public class CleanerGUI implements ActionListener {
         frame.add(paddingBottom, BorderLayout.PAGE_END);
     }
 
-    private static void makeFolderSelector() {
+    /**
+     * Makes the folder selector buttons.
+     */
+    private void makeFolderSelector() {
         // Constructing:
         selectContainer = new JPanel();
+        JPanel padding = new JPanel();
         GridBagConstraints c = new GridBagConstraints();
         chooseBtn = new JButton(folderChooseStr);
-        currentFolderLabel = new JLabel(currentFolderStr);
         currentBtn = new JButton(currentFolderStr);
-        JPanel padding = new JPanel();
+
+        // Listeners:
+        chooseBtn.setActionCommand(folderChooseStr);
+        currentBtn.setActionCommand(currentFolderStr);
+        chooseBtn.addActionListener(this);
+        currentBtn.addActionListener(this);
 
         // Style:
         selectContainer.setLayout(new GridBagLayout());
@@ -157,8 +169,8 @@ public class CleanerGUI implements ActionListener {
         chooseBtn.setBackground(btnColor);
         padding.setBackground(frameColor);
         currentBtn.setBackground(btnColor);
-        chooseBtn.setPreferredSize(new Dimension(200, 100));
-        currentBtn.setPreferredSize(new Dimension(200, 100));
+        chooseBtn.setPreferredSize(btnSize);
+        currentBtn.setPreferredSize(btnSize);
 
         // Adding to frame:
         frame.add(selectContainer, BorderLayout.CENTER);
