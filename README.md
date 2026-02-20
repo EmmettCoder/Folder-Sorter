@@ -1,2 +1,2 @@
-# Downloads-Folder-Cleaner
-Sorts your downloads folder.
+# Folder-Sorter
+Sorts a given folder.
