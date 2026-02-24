@@ -207,7 +207,15 @@ public class CleanerGUI implements ActionListener {
             case folderChooseStr: {
                 break;
             }
+            case currentFolderStr: {
+                handleCurrFolder();
+                break;
+            }
 
         }
+    }
+
+    private void handleCurrFolder() {
+        CleanerLogic.cleanHere();
     }
 }

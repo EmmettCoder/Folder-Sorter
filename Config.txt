@@ -3,6 +3,7 @@ pdf = Text
 
 mp3 = Audio
 
+# This is a comment. It will be ignored.
 mp4 = Video
 
 png = Images

@@ -14,15 +14,15 @@ public class ConfigReader {
      * @return A ConfigObject based off of the Config.txt file.
      */
     public static ConfigObject read() {
-        try (BufferedReader br = new BufferedReader(new FileReader("Config.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\emmet\\Documents\\GitHub\\Downloads-Folder-Cleaner\\Config.txt"))) {
             Map<String, String> folderNames = new HashMap<>();
 
             while (br.ready()) {
                 String currLine = br.readLine();
                 // Skips newlines. So the config file can be clean looking.
                 // Also skips pound signs for comments in the config file.
-                if ((currLine.length() > 0) || currLine.charAt(0) == '#') {
-                    String[] splitLine = currLine.split(" = ");
+                if ((currLine.length() > 0) && !(currLine.charAt(0) == '#')) {
+                    String[] splitLine = currLine.split("=");
                     String fileType = splitLine[0];
                     String folderName = splitLine[1];
                     folderNames.put(fileType, folderName);

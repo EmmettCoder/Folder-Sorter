@@ -1,3 +1,6 @@
+import java.awt.List;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -26,5 +29,9 @@ public class ConfigObject {
      */
     public String getFolderName(String fileType) {
         return folderNames.get(fileType);
+    }
+
+    public Collection<String> getAllFolderNames() {
+        return folderNames.values();
     }
 }
