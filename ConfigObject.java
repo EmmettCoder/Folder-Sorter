@@ -8,15 +8,15 @@ import java.util.Map;
  * @version 2-24-2026
  */
 public class ConfigObject {
-    private Map<String, String> folderTypes;
+    private Map<String, String> folderNames;
 
     /**
      * Explicit constructor.
      * 
-     * @param folderTypes The foldertypes hashmap to be used in the object.
+     * @param folderNames The foldertypes hashmap to be used in the object.
      */
-    public ConfigObject(Map<String, String> folderTypes) {
-        this.folderTypes = folderTypes;
+    public ConfigObject(Map<String, String> folderNames) {
+        this.folderNames = folderNames;
     }
 
     /**
@@ -25,6 +25,6 @@ public class ConfigObject {
      * @return The String of the folder for the given filetype to be put in.
      */
     public String getFolderName(String fileType) {
-        return folderTypes.get(fileType);
+        return folderNames.get(fileType);
     }
 }
