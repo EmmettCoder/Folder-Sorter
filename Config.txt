@@ -1,0 +1,18 @@
+txt = Text
+pdf = Text
+
+mp3 = Audio
+
+mp4 = Video
+
+png = Images
+jpg = Images
+jpeg = Images
+webp = Images
+gif = Images
+
+exe = Programs
+
+zip = Compressed
+rar = Compressed
+7z = Compressed
