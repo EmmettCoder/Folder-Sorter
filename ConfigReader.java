@@ -22,7 +22,7 @@ public class ConfigReader {
                 // Skips newlines. So the config file can be clean looking.
                 // Also skips pound signs for comments in the config file.
                 if ((currLine.length() > 0) && !(currLine.charAt(0) == '#')) {
-                    String[] splitLine = currLine.split("=");
+                    String[] splitLine = currLine.split(" = ");
                     String fileType = splitLine[0];
                     String folderName = splitLine[1];
                     folderNames.put(fileType, folderName);

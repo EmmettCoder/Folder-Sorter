@@ -1,8 +1,10 @@
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Collection;
 
 /**
@@ -30,7 +32,38 @@ public class CleanerLogic {
 
         // Logic.
         for (File f : files) {
-            System.out.println(f.getAbsolutePath());
+            // System.out.println(f.getAbsolutePath());
+
+            // Checks if the current file is a folder. If it is, skip.
+            if (!f.isDirectory()) {
+                // Some variables to avoid magic numbers and magic strings.
+                int fileNameLength = f.getName().toString().length();
+                int destinationFirstHalf = f.getAbsolutePath().length() - fileNameLength;
+                String fileType = f.getName().split("\\.")[1];
+                System.out.println(fileType);
+                String destBeginning = f.getAbsolutePath().substring(0, destinationFirstHalf);
+                String destFolder = co.getFolderName(fileType);
+
+                if (!(destFolder == null)) {
+                    Path source = Paths.get(f.getAbsolutePath());
+                    Path destination = Paths.get(destBeginning + "/" + destFolder + "/" + f.getName());
+
+                    System.out.println(destination.toAbsolutePath());
+                    
+                    try {
+                        Files.move(source, destination);
+                    // If the file already exists, add a 1 to the end of the filename.
+                    } catch (IOException ioe) {
+                        if (destination.toAbsolutePath().toString().split("(").length > 0) {
+                            
+                        } else {
+                            destination = Paths.get(destination + "(1)");
+                        }
+                    }
+                }
+
+            }
+
         }
 
         return true;
