@@ -39,28 +39,49 @@ public class CleanerLogic {
                 // Some variables to avoid magic numbers and magic strings.
                 int fileNameLength = f.getName().toString().length();
                 int destinationFirstHalf = f.getAbsolutePath().length() - fileNameLength;
-                String fileType = f.getName().split("\\.")[1];
-                System.out.println(fileType);
+                String[] fileSplit = f.getName().split("\\.");
+                
                 String destBeginning = f.getAbsolutePath().substring(0, destinationFirstHalf);
-                String destFolder = co.getFolderName(fileType);
+                System.out.println(fileSplit[0]);
+                if (fileSplit.length > 1) {
+                String destFolder = co.getFolderName(fileSplit[1]);
 
                 if (!(destFolder == null)) {
                     Path source = Paths.get(f.getAbsolutePath());
                     Path destination = Paths.get(destBeginning + "/" + destFolder + "/" + f.getName());
 
-                    System.out.println(destination.toAbsolutePath());
+                    //System.out.println(destination.toAbsolutePath());
                     
                     try {
                         Files.move(source, destination);
                     // If the file already exists, add a 1 to the end of the filename.
-                    } catch (IOException ioe) {
-                        if (destination.toAbsolutePath().toString().split("(").length > 0) {
-                            
+                    } catch (FileAlreadyExistsException faee) {
+                        String[] splitByPerenthesis = fileSplit[0].split("\\(");
+                        //System.out.println(splitByPerenthesis[0]);
+                        if (splitByPerenthesis.length > 1) {
+                            int oldNum = Integer.parseInt(splitByPerenthesis[splitByPerenthesis.length-2]);
+                            int newNum = oldNum + 1;
+                            destination = Paths.get(destBeginning + "/" + destFolder + "/" + fileSplit[0] + "\\(" + newNum + "\\)" + fileSplit[1]);
+                            try {
+                                Files.move(source, destination);
+                            } catch (IOException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
                         } else {
-                            destination = Paths.get(destination + "(1)");
+                            destination = Paths.get(destBeginning + "/" + destFolder + "/" + fileSplit[0] + "\\(0\\)" + fileSplit[1]);
+                            try {
+                                Files.move(source, destination);
+                            } catch (IOException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
                         }
+                    } catch (IOException ioe) {
+
                     }
                 }
+            }
 
             }
 
