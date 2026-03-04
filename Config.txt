@@ -3,17 +3,37 @@ pdf = Text
 
 mp3 = Audio
 
-# This is a comment. It will be ignored.
+# This is a comment. It will be ignored. Comments start with a pound symbol.
 mp4 = Video
+MP4 = Video
+mov = Video
+MOV = Video
 
 png = Images
 jpg = Images
 jpeg = Images
 webp = Images
 gif = Images
+HEIC = Images
 
 exe = Programs
+msi = Programs
+
+apk = Android Apps
 
 zip = Compressed
 rar = Compressed
 7z = Compressed
+jar = Jars
+
+docx = MicroSoft/Docs
+pptx = MicroSoft/PowerPoints
+xlsx = MicroSoft/Spreadsheets
+
+py = Programming/Python Files
+java = Programming/Java Files
+htm = Programming/HTML Files
+html = Programming/HTML Files
+json = Programming/JSON Files
+
+

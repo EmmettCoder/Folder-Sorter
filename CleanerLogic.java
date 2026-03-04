@@ -44,7 +44,7 @@ public class CleanerLogic {
                 String destBeginning = f.getAbsolutePath().substring(0, destinationFirstHalf);
                 System.out.println(fileSplit[0]);
                 if (fileSplit.length > 1) {
-                String destFolder = co.getFolderName(fileSplit[1]);
+                String destFolder = co.getFolderName(fileSplit[fileSplit.length-1]);
 
                 if (!(destFolder == null)) {
                     Path source = Paths.get(f.getAbsolutePath());
@@ -61,7 +61,7 @@ public class CleanerLogic {
                         if (splitByPerenthesis.length > 1) {
                             int oldNum = Integer.parseInt(splitByPerenthesis[splitByPerenthesis.length-2]);
                             int newNum = oldNum + 1;
-                            destination = Paths.get(destBeginning + "/" + destFolder + "/" + fileSplit[0] + "\\(" + newNum + "\\)" + fileSplit[1]);
+                            destination = Paths.get(destBeginning + "/" + destFolder + "/" + fileSplit[0] + "\\(" + newNum + "\\)" + fileSplit[fileSplit.length-1]);
                             try {
                                 Files.move(source, destination);
                             } catch (IOException e) {
@@ -69,7 +69,7 @@ public class CleanerLogic {
                                 e.printStackTrace();
                             }
                         } else {
-                            destination = Paths.get(destBeginning + "/" + destFolder + "/" + fileSplit[0] + "\\(0\\)" + fileSplit[1]);
+                            destination = Paths.get(destBeginning + "/" + destFolder + "/" + fileSplit[0] + "(0)" + fileSplit[fileSplit.length-1]);
                             try {
                                 Files.move(source, destination);
                             } catch (IOException e) {
