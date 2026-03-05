@@ -12,6 +12,8 @@ import java.util.Collection;
 public class CleanerLogic {
     final static ConfigObject co = ConfigReader.read();
 
+    final static String jarName = "Folder-Cleaner";
+
     /**
      * Cleans the given folder.
      * 
@@ -38,8 +40,10 @@ public class CleanerLogic {
                 String[] fileSplit = f.getName().split("\\.");
 
                 String destBeginning = f.getAbsolutePath().substring(0, destinationFirstHalf);
-                System.out.println(fileSplit[0]);
-                // If the file name has an extension.
+
+                // Check if the file is this program. If so, skip it.
+                if (destBeginning.equals(jarName)) continue;
+                // If the file name has an extension. If not, skip.
                 if (fileSplit.length > 1) {
                     // Get the folder for the file's extension.
                     String destFolder = co.getFolderName(fileSplit[fileSplit.length - 1]);
@@ -49,7 +53,7 @@ public class CleanerLogic {
                         // Path of the file.
                         Path source = Paths.get(f.getAbsolutePath());
                         // Path of where the file will go.
-                        Path destination = Paths.get(destBeginning + "/" + destFolder + "/" + f.getName());
+                        Path destination = Paths.get(destBeginning + File.separator + destFolder + File.separator + f.getName());
 
                         try {
                             Files.move(source, destination);
@@ -73,17 +77,17 @@ public class CleanerLogic {
                                     // Strip the old (n) from the base name
                                     String cleanBaseName = baseName.substring(0, lastOpenParen).trim();
 
-                                    destination = Paths.get(destBeginning + "/" + destFolder + "/" + cleanBaseName
+                                    destination = Paths.get(destBeginning + File.separator + destFolder + File.separator + cleanBaseName
                                             + " (" + newNum + ")." + extension);
                                 } catch (NumberFormatException e) {
                                     // If the stuff in () wasn't actually a number, treat it as a new file
                                     destination = Paths.get(
-                                            destBeginning + "/" + destFolder + "/" + baseName + " (1)." + extension);
+                                            destBeginning + File.separator + destFolder + File.separator + baseName + " (1)." + extension);
                                 }
                             } else {
                                 // No parentheses found, start with (1)
                                 destination = Paths
-                                        .get(destBeginning + "/" + destFolder + "/" + baseName + " (1)." + extension);
+                                        .get(destBeginning + File.separator + destFolder + File.separator + baseName + " (1)." + extension);
                             }
 
                             // Attempt the move with the new destination
@@ -119,7 +123,7 @@ public class CleanerLogic {
         for (String currFolder : foldersList) {
             try {
                 // Make the path of the new folder in the directory given.
-                Path folderPath = Paths.get(directory + "/" + currFolder);
+                Path folderPath = Paths.get(directory + File.separator + currFolder);
                 // Make the folder in the directory given.
                 Files.createDirectories(folderPath);
             } catch (IOException ioe) {
