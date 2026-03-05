@@ -7,7 +7,7 @@ import java.util.Collection;
  * Handles all cleaning logic.
  * 
  * @author Emmett Grebe
- * @version 3-4-2026
+ * @version 3-5-2026
  */
 public class CleanerLogic {
     final static ConfigObject co = ConfigReader.read();
@@ -20,20 +20,15 @@ public class CleanerLogic {
      * @param folderPath
      */
     public static boolean cleanThere(String directory) {
-        
-        // All files in the directory.
-        File[] files = new File(directory).listFiles();
+        File[] files = new File(directory).listFiles();     // All files in the directory.
 
         makeFolders(directory);
 
-        // Null check.
-        if (files == null)
-            return false;
+        if (files == null) return false;  
 
         // Logic.
         for (File f : files) {
-            // Checks if the current file is a folder. If it is, skip.
-            if (!f.isDirectory()) {
+            if (!f.isDirectory()) {                         // Checks if the current file is a folder. If it is, skip.
                 // Some variables to avoid magic numbers and magic strings.
                 int fileNameLength = f.getName().toString().length();
                 int destinationFirstHalf = f.getAbsolutePath().length() - fileNameLength;
@@ -41,24 +36,22 @@ public class CleanerLogic {
 
                 String destBeginning = f.getAbsolutePath().substring(0, destinationFirstHalf);
 
-                // Check if the file is this program. If so, skip it.
-                if (destBeginning.equals(jarName)) continue;
-                // If the file name has an extension. If not, skip.
-                if (fileSplit.length > 1) {
-                    // Get the folder for the file's extension.
-                    String destFolder = co.getFolderName(fileSplit[fileSplit.length - 1]);
+                if (destBeginning.equals(jarName)) continue;   // Check if the file is this program. If so, skip it.
+                
+                if (fileSplit.length > 1) {                                                 // If the file name has an extension. If not, skip.
+                    String destFolder = co.getFolderName(fileSplit[fileSplit.length - 1]);  // Get the folder for the file's extension.
 
-                    // If there is not a folder for the extension, do nothing.
-                    if (!(destFolder == null)) {
-                        // Path of the file.
-                        Path source = Paths.get(f.getAbsolutePath());
-                        // Path of where the file will go.
-                        Path destination = Paths.get(destBeginning + File.separator + destFolder + File.separator + f.getName());
+                    if (!(destFolder == null)) {                        // If there is not a folder for the extension, do nothing.
+                        Path source = Paths.get(f.getAbsolutePath());   // Path of the file.
+                        Path destination = Paths.get(destBeginning +    // Path of where the file will go.
+                                                     File.separator + 
+                                                     destFolder + 
+                                                     File.separator + 
+                                                     f.getName());
 
                         try {
                             Files.move(source, destination);
-                            // If the file already exists, add a 1 to the end of the filename.
-                        } catch (FileAlreadyExistsException faee) {
+                        } catch (FileAlreadyExistsException faee) {      // If the file already exists, add a 1 to the end of the filename.
                             // Get the base name (everything before the last dot)
                             String baseName = fileSplit[0];
                             String extension = fileSplit[fileSplit.length - 1];
@@ -69,29 +62,37 @@ public class CleanerLogic {
 
                             if (lastOpenParen != -1 && lastCloseParen != -1 && lastCloseParen > lastOpenParen) {
                                 try {
-                                    // Extract the string between ( and )
-                                    String numStr = baseName.substring(lastOpenParen + 1, lastCloseParen).trim();
+                                    String numStr = baseName.substring(lastOpenParen + 1, lastCloseParen).trim(); // Extract the string between ( and )
                                     int oldNum = Integer.parseInt(numStr);
                                     int newNum = oldNum + 1;
 
-                                    // Strip the old (n) from the base name
-                                    String cleanBaseName = baseName.substring(0, lastOpenParen).trim();
+                                    
+                                    String cleanBaseName = baseName.substring(0, lastOpenParen).trim();   // Strip the old (n) from the base name
 
-                                    destination = Paths.get(destBeginning + File.separator + destFolder + File.separator + cleanBaseName
-                                            + " (" + newNum + ")." + extension);
-                                } catch (NumberFormatException e) {
-                                    // If the stuff in () wasn't actually a number, treat it as a new file
-                                    destination = Paths.get(
-                                            destBeginning + File.separator + destFolder + File.separator + baseName + " (1)." + extension);
+                                    destination = Paths.get(destBeginning + 
+                                                            File.separator + 
+                                                            destFolder + 
+                                                            File.separator + 
+                                                            cleanBaseName +
+                                                            " (" + newNum + ")." + 
+                                                            extension);
+                                } catch (NumberFormatException e) {     // If the stuff in () wasn't actually a number, treat it as a new file
+                                    destination = Paths.get(destBeginning + 
+                                                            File.separator + 
+                                                            destFolder + 
+                                                            File.separator + 
+                                                            baseName + 
+                                                            " (1)." + 
+                                                            extension);
                                 }
-                            } else {
-                                // No parentheses found, start with (1)
+                            } else {   // No parentheses found, start with (1)
+                                
                                 destination = Paths
                                         .get(destBeginning + File.separator + destFolder + File.separator + baseName + " (1)." + extension);
                             }
 
-                            // Attempt the move with the new destination
-                            try {
+                            
+                            try {  // Attempt the move with the new destination
                                 Files.move(source, destination);
                             } catch (IOException e) {
                                 e.printStackTrace();
@@ -117,15 +118,11 @@ public class CleanerLogic {
      * @return True if successful, false if not successful.
      */
     private static boolean makeFolders(String directory) {
-        // Get all the folder names and their correlated extension.
-        Collection<String> foldersList = co.getAllFolderNames();
-        // Iterate over each folder.
-        for (String currFolder : foldersList) {
+        Collection<String> foldersList = co.getAllFolderNames();                      // Get all the folder names and their correlated extension.
+        for (String currFolder : foldersList) {                                       // Iterate over each folder.
             try {
-                // Make the path of the new folder in the directory given.
-                Path folderPath = Paths.get(directory + File.separator + currFolder);
-                // Make the folder in the directory given.
-                Files.createDirectories(folderPath);
+                Path folderPath = Paths.get(directory + File.separator + currFolder); // Make the path of the new folder in the directory given.
+                Files.createDirectories(folderPath);                                  // Make the folder in the directory given.
             } catch (IOException ioe) {
                 return false;
             }

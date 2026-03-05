@@ -1,5 +1,6 @@
 txt = Text
 pdf = Text
+PDF = Text
 tex = Text
 rtf = Text
 
@@ -41,6 +42,8 @@ exe = Programs
 msi = Programs
 iso = Programs
 swf = Programs
+dll = Programs/Program Files
+toml = Programs/Program Files
 
 apk = Android Apps
 
