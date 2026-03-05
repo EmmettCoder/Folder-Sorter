@@ -19,8 +19,9 @@ public class CleanerLogic {
      * Cleans the current folder.
      */
     public static boolean cleanHere() {
-        System.out.println(co.getAllFolderNames());
+        // Current directory.
         String currDirectory = System.getProperty("user.dir");
+        // All files in the current directory.
         File[] files = new File(currDirectory).listFiles();
 
         makeFolders(currDirectory);
@@ -31,8 +32,6 @@ public class CleanerLogic {
 
         // Logic.
         for (File f : files) {
-            // System.out.println(f.getAbsolutePath());
-
             // Checks if the current file is a folder. If it is, skip.
             if (!f.isDirectory()) {
                 // Some variables to avoid magic numbers and magic strings.
@@ -42,14 +41,17 @@ public class CleanerLogic {
 
                 String destBeginning = f.getAbsolutePath().substring(0, destinationFirstHalf);
                 System.out.println(fileSplit[0]);
+                // If the file name has an extension.
                 if (fileSplit.length > 1) {
+                    // Get the folder for the file's extension.
                     String destFolder = co.getFolderName(fileSplit[fileSplit.length - 1]);
 
+                    // If there is not a folder for the extension, do nothing.
                     if (!(destFolder == null)) {
+                        // Path of the file.
                         Path source = Paths.get(f.getAbsolutePath());
+                        // Path of where the file will go.
                         Path destination = Paths.get(destBeginning + "/" + destFolder + "/" + f.getName());
-
-                        // System.out.println(destination.toAbsolutePath());
 
                         try {
                             Files.move(source, destination);
@@ -86,7 +88,7 @@ public class CleanerLogic {
                                         .get(destBeginning + "/" + destFolder + "/" + baseName + " (1)." + extension);
                             }
 
-                            // 3. Attempt the move with the new destination
+                            // Attempt the move with the new destination
                             try {
                                 Files.move(source, destination);
                             } catch (IOException e) {
@@ -122,10 +124,14 @@ public class CleanerLogic {
      * @return True if successful, false if not successful.
      */
     private static boolean makeFolders(String directory) {
+        // Get all the folder names and their correlated extension.
         Collection<String> foldersList = co.getAllFolderNames();
+        // Iterate over each folder.
         for (String currFolder : foldersList) {
             try {
+                // Make the path of the new folder in the directory given.
                 Path folderPath = Paths.get(directory + "/" + currFolder);
+                // Make the folder in the directory given.
                 Files.createDirectories(folderPath);
             } catch (IOException ioe) {
                 return false;
