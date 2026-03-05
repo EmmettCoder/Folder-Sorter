@@ -1,20 +1,36 @@
 txt = Text
 pdf = Text
+tex = Text
 
 mp3 = Audio
+MP3 = Audio
+aac = Audio
+wav = Audio
+m4a = Audio
+ogg = Audio
 
-# This is a comment. It will be ignored. Comments start with a pound symbol.
+# This is a comment. It will be ignored by the program. Comments start with a pound symbol.
 mp4 = Video
 MP4 = Video
 mov = Video
 MOV = Video
+mkv = Video
+avi = Video
+
+# Folders in folders is allowed.
+doc = MicroSoft/Docs
+docx = MicroSoft/Docs
+pptx = MicroSoft/PowerPoints
+xlsx = MicroSoft/Spreadsheets
 
 png = Images
 jpg = Images
 jpeg = Images
 webp = Images
-gif = Images
+gif = Images/Gifs
 HEIC = Images
+avif = Images
+ico = Images/Icons
 
 exe = Programs
 msi = Programs
@@ -27,11 +43,6 @@ rar = Compressed
 tar = Compressed
 xz = Compressed
 jar = Jars
-
-doc = MicroSoft/Docs
-docx = MicroSoft/Docs
-pptx = MicroSoft/PowerPoints
-xlsx = MicroSoft/Spreadsheets
 
 py = Programming/Python Files
 java = Programming/Java Files
