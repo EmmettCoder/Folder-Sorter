@@ -4,7 +4,6 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.Collection;
 
 /**
@@ -56,33 +55,42 @@ public class CleanerLogic {
                             Files.move(source, destination);
                             // If the file already exists, add a 1 to the end of the filename.
                         } catch (FileAlreadyExistsException faee) {
-                            String[] splitByPerenthesis = fileSplit[0].split("\\(");
-                            // System.out.println(splitByPerenthesis[0]);
-                            String newName = "";
-                            for (int i = 0; i < fileSplit.length - 1; i++) {
-                                newName += fileSplit[i];
-                            }
-                            if (splitByPerenthesis.length > 1) {
-                                int oldNum = Integer.parseInt(splitByPerenthesis[splitByPerenthesis.length - 2]);
-                                int newNum = oldNum + 1;
+                            // Get the base name (everything before the last dot)
+                            String baseName = fileSplit[0];
+                            String extension = fileSplit[fileSplit.length - 1];
 
-                                destination = Paths.get(destBeginning + "/" + destFolder + "/" + newName + "\\("
-                                        + newNum + "\\)" + fileSplit[fileSplit.length - 1]);
+                            // Look for the last "(" to see if there's already a number
+                            int lastOpenParen = baseName.lastIndexOf("(");
+                            int lastCloseParen = baseName.lastIndexOf(")");
+
+                            if (lastOpenParen != -1 && lastCloseParen != -1 && lastCloseParen > lastOpenParen) {
                                 try {
-                                    Files.move(source, destination);
-                                } catch (IOException e) {
-                                    // TODO Auto-generated catch block
-                                    e.printStackTrace();
+                                    // Extract the string between ( and )
+                                    String numStr = baseName.substring(lastOpenParen + 1, lastCloseParen).trim();
+                                    int oldNum = Integer.parseInt(numStr);
+                                    int newNum = oldNum + 1;
+
+                                    // Strip the old (n) from the base name
+                                    String cleanBaseName = baseName.substring(0, lastOpenParen).trim();
+
+                                    destination = Paths.get(destBeginning + "/" + destFolder + "/" + cleanBaseName
+                                            + " (" + newNum + ")." + extension);
+                                } catch (NumberFormatException e) {
+                                    // If the stuff in () wasn't actually a number, treat it as a new file
+                                    destination = Paths.get(
+                                            destBeginning + "/" + destFolder + "/" + baseName + " (1)." + extension);
                                 }
                             } else {
-                                destination = Paths.get(destBeginning + "/" + destFolder + "/" + newName + "(0)"
-                                        + fileSplit[fileSplit.length - 1]);
-                                try {
-                                    Files.move(source, destination);
-                                } catch (IOException e) {
-                                    // TODO Auto-generated catch block
-                                    e.printStackTrace();
-                                }
+                                // No parentheses found, start with (1)
+                                destination = Paths
+                                        .get(destBeginning + "/" + destFolder + "/" + baseName + " (1)." + extension);
+                            }
+
+                            // 3. Attempt the move with the new destination
+                            try {
+                                Files.move(source, destination);
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
                         } catch (IOException ioe) {
 
