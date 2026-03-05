@@ -24,8 +24,11 @@ apk = Android Apps
 zip = Compressed
 rar = Compressed
 7z = Compressed
+tar = Compressed
+xz = Compressed
 jar = Jars
 
+doc = MicroSoft/Docs
 docx = MicroSoft/Docs
 pptx = MicroSoft/PowerPoints
 xlsx = MicroSoft/Spreadsheets
@@ -35,5 +38,7 @@ java = Programming/Java Files
 htm = Programming/HTML Files
 html = Programming/HTML Files
 json = Programming/JSON Files
+js = Programming/JavaScript Files
+css = Programming/CSS Files
 
 
