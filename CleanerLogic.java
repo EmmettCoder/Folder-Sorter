@@ -13,15 +13,16 @@ public class CleanerLogic {
     final static ConfigObject co = ConfigReader.read();
 
     /**
-     * Cleans the current folder.
+     * Cleans the given folder.
+     * 
+     * @param folderPath
      */
-    public static boolean cleanHere() {
-        // Current directory.
-        String currDirectory = System.getProperty("user.dir");
-        // All files in the current directory.
-        File[] files = new File(currDirectory).listFiles();
+    public static boolean cleanThere(String directory) {
+        
+        // All files in the directory.
+        File[] files = new File(directory).listFiles();
 
-        makeFolders(currDirectory);
+        makeFolders(directory);
 
         // Null check.
         if (files == null)
@@ -101,15 +102,6 @@ public class CleanerLogic {
 
         }
 
-        return true;
-    }
-
-    /**
-     * Cleans the given folder.
-     * 
-     * @param folderPath
-     */
-    public static boolean cleanThere(String folderPath) {
         return true;
     }
 

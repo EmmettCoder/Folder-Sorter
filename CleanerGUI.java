@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -205,6 +206,7 @@ public class CleanerGUI implements ActionListener {
             }
             // Handles choose folder button.
             case folderChooseStr: {
+                handleChooseFolder();
                 break;
             }
             case currentFolderStr: {
@@ -216,6 +218,24 @@ public class CleanerGUI implements ActionListener {
     }
 
     private void handleCurrFolder() {
-        CleanerLogic.cleanHere();
+        // Current directory.
+        String currDirectory = System.getProperty("user.dir");
+        CleanerLogic.cleanThere(currDirectory);
+    }
+
+    private void handleChooseFolder() {
+        JFileChooser fileChooser = new JFileChooser();
+        // Make the folder chooser only allow selecting folders.
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        // Set the file chooser to the current directory of the program.
+        fileChooser.setCurrentDirectory(new File(".")); 
+        // Show the file chooser and store the result.
+        int fileChoserReturnValue = fileChooser.showOpenDialog(frame);
+
+        // If user clicks yes, clean selected folder.
+        if (fileChoserReturnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFolder = fileChooser.getSelectedFile();
+            CleanerLogic.cleanThere(selectedFolder.getAbsolutePath());
+        }
     }
 }

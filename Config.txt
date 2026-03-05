@@ -1,6 +1,7 @@
 txt = Text
 pdf = Text
 tex = Text
+rtf = Text
 
 mp3 = Audio
 MP3 = Audio
@@ -20,12 +21,16 @@ avi = Video
 # Folders in folders is allowed.
 doc = MicroSoft/Docs
 docx = MicroSoft/Docs
+ppt = MicroSoft/PowerPoints
 pptx = MicroSoft/PowerPoints
+xls = MicroSoft/Spreadsheets
 xlsx = MicroSoft/Spreadsheets
+csv = Microsoft/Spreadsheets/CSV
 
 png = Images
 jpg = Images
 jpeg = Images
+jfif = Images
 webp = Images
 gif = Images/Gifs
 HEIC = Images
@@ -34,6 +39,8 @@ ico = Images/Icons
 
 exe = Programs
 msi = Programs
+iso = Programs
+swf = Programs
 
 apk = Android Apps
 
@@ -42,6 +49,7 @@ rar = Compressed
 7z = Compressed
 tar = Compressed
 xz = Compressed
+dmg = Compressed
 jar = Jars
 
 py = Programming/Python Files
@@ -51,5 +59,6 @@ html = Programming/HTML Files
 json = Programming/JSON Files
 js = Programming/JavaScript Files
 css = Programming/CSS Files
+xml = Programming/XML Files
 
 
