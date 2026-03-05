@@ -1,16 +1,13 @@
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.Collection;
 
 /**
  * Handles all cleaning logic.
  * 
  * @author Emmett Grebe
- * @version 2-19-2026
+ * @version 3-4-2026
  */
 public class CleanerLogic {
     final static ConfigObject co = ConfigReader.read();

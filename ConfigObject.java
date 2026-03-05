@@ -1,7 +1,4 @@
-import java.awt.List;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Config object for Folder Cleaner. Using this instead of a normal hashmap so

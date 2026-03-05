@@ -14,7 +14,7 @@ public class ConfigReader {
      * @return A ConfigObject based off of the Config.txt file.
      */
     public static ConfigObject read() {
-        try (BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\emmet\\Documents\\GitHub\\Downloads-Folder-Cleaner\\Config.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("Config.txt"))) {
             Map<String, String> folderNames = new HashMap<>();
 
             while (br.ready()) {
@@ -23,7 +23,9 @@ public class ConfigReader {
                 // Also skips pound signs for comments in the config file.
                 if ((currLine.length() > 0) && !(currLine.charAt(0) == '#')) {
                     String[] splitLine = currLine.split(" = ");
+                    // Extension of file.
                     String fileType = splitLine[0];
+                    // The folder the file will go in.
                     String folderName = splitLine[1];
                     folderNames.put(fileType, folderName);
                 }
