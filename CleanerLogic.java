@@ -28,7 +28,7 @@ public class CleanerLogic {
 
         // Logic.
         for (File f : files) {
-            if (!f.isDirectory()) {                         // Checks if the current file is a folder. If it is, skip.
+            if (!f.isDirectory()) {     // Checks if the current file is a folder. If it is, skip.
                 // Some variables to avoid magic numbers and magic strings.
                 int fileNameLength = f.getName().toString().length();
                 int destinationFirstHalf = f.getAbsolutePath().length() - fileNameLength;
