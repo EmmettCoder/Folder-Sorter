@@ -10,7 +10,7 @@ import java.util.Collection;
  * @version 3-5-2026
  */
 public class CleanerLogic {
-    final static ConfigObject co = ConfigReader.read();
+    static ConfigObject co;
 
     final static String jarName = "Folder-Cleaner";
 
@@ -20,6 +20,7 @@ public class CleanerLogic {
      * @param folderPath
      */
     public static boolean cleanThere(String directory) {
+        co = ConfigReader.read();
         File[] files = new File(directory).listFiles();     // All files in the directory.
 
         makeFolders(directory);

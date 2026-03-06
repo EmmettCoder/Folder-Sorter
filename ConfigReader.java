@@ -14,7 +14,7 @@ public class ConfigReader {
      * @return A ConfigObject based off of the Config.txt file.
      */
     public static ConfigObject read() {
-        try (BufferedReader br = new BufferedReader(new FileReader("Config.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(Driver.configPath.toString()))) {
             Map<String, String> folderNames = new HashMap<>();
 
             while (br.ready()) {

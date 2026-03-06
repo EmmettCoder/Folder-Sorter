@@ -12,27 +12,25 @@ import java.nio.file.Paths;
  * @version 2-19-2026
  */
 public class Driver {
+    final static Path documentsPath = Paths.get(System.getProperty("user.home") + File.separator + "Documents" + File.separator + "Folder-Sorter");
+    final static Path configPath = Paths.get(documentsPath.toString() + File.separator + "Config.txt");        
+
     /**
      * Main method. Creates config folder and creates GUI.
      * 
      * @param args The arguments given through the command line.
      */
     public static void main(String[] args) {
-        // Make the Folder-Seperator folder in user's documents if it does not already exist.
-        Path documentsPath = Paths.get(System.getProperty("user.home") + File.separator + "Documents" + File.separator + "Folder-Sorter");
-        // Make the config file in the Folder-Seperator folder if it does not already exist.
-        Path configPath = Paths.get(documentsPath.toString() + File.separator + "Config.txt");        
-
         try {
-            Files.createDirectories(documentsPath);
+            Files.createDirectories(documentsPath); // Make the Folder-Sorter folder if it does not already exist.
             String defaultConfigPath = "Config.txt";
             InputStream is = Driver.class.getResourceAsStream(defaultConfigPath);
-            Files.copy(is, configPath);   // Copy without replacing.
+            Files.copy(is, configPath);   // Copy Config.txt without replacing old one.
         } catch (IOException e) {
             // TODO make a error pop up here.
         }
 
-        // Make the GUI.
+        // Make and show the GUI.
         CleanerGUI cGUI = new CleanerGUI();
         cGUI.makeGUI();
     }
