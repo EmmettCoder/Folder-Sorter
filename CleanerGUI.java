@@ -42,7 +42,7 @@ public class CleanerGUI implements ActionListener {
     final String aboutStr = "About";
     final String guideStr = "Guide";
     final String folderChooseStr = "Select a folder";
-    final String currentFolderStr = "Use the folder the program is in";
+    final String currentFolderStr = "<html>Use the folder the <br>program is in</html>";
 
     /**
      * Does all the handler methods in order.
