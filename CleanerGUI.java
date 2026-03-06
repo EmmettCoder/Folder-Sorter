@@ -235,7 +235,21 @@ public class CleanerGUI implements ActionListener {
         // If user clicks yes, clean selected folder.
         if (fileChoserReturnValue == JFileChooser.APPROVE_OPTION) {
             File selectedFolder = fileChooser.getSelectedFile();
-            CleanerLogic.cleanThere(selectedFolder.getAbsolutePath());
+            final String popUpTitle = "Folder Cleaner Result";
+            final String successStr = "Folder " + selectedFolder.getName() + " cleaned successfully.";
+            final String failureStr = "Folder " + selectedFolder.getName() + " was not cleaned successfully.";
+                
+            if (CleanerLogic.cleanThere(selectedFolder.getAbsolutePath())) {
+                JOptionPane.showMessageDialog(frame, 
+                                              successStr, 
+                                              popUpTitle, 
+                                              JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(frame, 
+                                              failureStr, 
+                                              popUpTitle, 
+                                              JOptionPane.INFORMATION_MESSAGE);
+            }
         }
     }
 }
