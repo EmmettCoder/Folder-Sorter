@@ -12,7 +12,8 @@ public class CleanerConstants {
     final static Path userDocumentsPath = Paths.get(System.getProperty("user.home") + File.separator + "Documents" + File.separator + "Folder-Sorter");
     final static Path userConfigPath = Paths.get(userDocumentsPath.toString() + File.separator + "Config.txt");  
 
-    final static Path defaultConfigPath = Paths.get("Resources/Config.txt");
-    final static Path aboutTextPath = Paths.get("Resources/About.html");
-    final static Path guideTextPath = Paths.get("Resources/Guide.html");
+    final static String defaultConfigPath = "/Assets/Config.txt";
+    final static String aboutTextPath = "/Assets/About.html";
+    final static String guideTextPath = "/Assets/Guide.html";
+    
 }

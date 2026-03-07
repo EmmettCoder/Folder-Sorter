@@ -129,9 +129,9 @@ public class CleanerGUI implements ActionListener {
         frame.setJMenuBar(topMenuBar);
 
         // Put the text from the txt files in Resources.
-        InputStream isAbout = Driver.class.getResourceAsStream(CleanerConstants.aboutTextPath.toString());
+        InputStream isAbout = CleanerGUI.class.getResourceAsStream(CleanerConstants.aboutTextPath);
         BufferedReader brAbout = new BufferedReader(new InputStreamReader(isAbout));
-        InputStream isGuide = Driver.class.getResourceAsStream(CleanerConstants.guideTextPath.toString());
+        InputStream isGuide = CleanerGUI.class.getResourceAsStream(CleanerConstants.guideTextPath);
         BufferedReader brGuide = new BufferedReader(new InputStreamReader(isGuide));
         try {
             while (brAbout.ready()) aboutText += brAbout.readLine();
@@ -217,7 +217,7 @@ public class CleanerGUI implements ActionListener {
 
     /**
      * Handles button presses. Does not do the logic behind each button. Logic is
-     * delegated to each action's seperate method for readability.
+     * delegated to each action's separate method for readability.
      * 
      * @param e The ActionEvent.
      */
@@ -308,5 +308,20 @@ public class CleanerGUI implements ActionListener {
         // Current directory.
         String currDirectory = System.getProperty("user.dir");
         CleanerLogic.cleanThere(currDirectory);
+        final String popUpTitle = "Folder Cleaner Result";
+            final String successStr = "Folder " + System.getProperty("user.dir") + " cleaned successfully.";
+            final String failureStr = "Folder " + System.getProperty("user.dir") + " was not cleaned successfully.";
+                
+            if (CleanerLogic.cleanThere(System.getProperty("user.dir"))) {
+                JOptionPane.showMessageDialog(frame, 
+                                              successStr, 
+                                              popUpTitle, 
+                                              JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(frame, 
+                                              failureStr, 
+                                              popUpTitle, 
+                                              JOptionPane.INFORMATION_MESSAGE);
+            }
     }
 }

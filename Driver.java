@@ -12,7 +12,6 @@ import java.nio.file.Paths;
  * @version 2-19-2026
  */
 public class Driver {
-          
 
     /**
      * Main method. Creates config folder and creates GUI.
@@ -21,9 +20,15 @@ public class Driver {
      */
     public static void main(String[] args) {
         try {
-            Files.createDirectories(CleanerConstants.userDocumentsPath); // Make the Folder-Sorter folder if it does not already exist.
-            InputStream is = Driver.class.getResourceAsStream(CleanerConstants.defaultConfigPath.toString());
-            Files.copy(is, CleanerConstants.userConfigPath);   // Copy Config.txt without replacing old one.
+            Files.createDirectories(CleanerConstants.userDocumentsPath); // Make the Folder-Sorter folder if it does not
+                                                                         // already exist.
+            InputStream is = Driver.class.getResourceAsStream(CleanerConstants.defaultConfigPath);
+            System.out.println(CleanerConstants.userConfigPath.toString());
+            System.out.println(CleanerConstants.defaultConfigPath.toString());
+
+            if (Files.notExists(CleanerConstants.userConfigPath)) {    // Copy Config.txt without replacing old one.
+                Files.copy(is, CleanerConstants.userConfigPath);
+            } 
         } catch (IOException e) {
             // TODO make a error pop up here.
         }
