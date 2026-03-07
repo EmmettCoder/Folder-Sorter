@@ -1,6 +1,8 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 
@@ -89,6 +91,16 @@ public class CleanerGUI implements ActionListener {
                                                 "Error", 
                                                         JOptionPane.OK_OPTION);
             if (result == JOptionPane.OK_OPTION) frame.dispose();
+        }
+
+        // Icon
+        InputStream imgStream = getClass().getResourceAsStream(CleanerConstants.iconPath);
+        try {
+            Image iconImage = ImageIO.read(imgStream);
+            frame.setIconImage(iconImage);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
 
