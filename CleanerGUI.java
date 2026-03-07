@@ -47,6 +47,9 @@ public class CleanerGUI implements ActionListener {
     final String folderChooseStr = "Select a folder";
     final String currentFolderStr = "<html>Use the folder the <br>program is in</html>";
 
+    String aboutText;
+    String guideText;
+
     /**
      * Does all the handler methods in order.
      * Handler methods are seperated by category for ease of finding them.
@@ -122,6 +125,8 @@ public class CleanerGUI implements ActionListener {
         topMenuBar.add(configMenu);
         topMenuBar.add(helpMenu);
         frame.setJMenuBar(topMenuBar);
+
+        
     }
 
     /**

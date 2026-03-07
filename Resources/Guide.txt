@@ -1,0 +1,25 @@
+<h1>Folder-Sorter</h1>
+<p>Sorts a given folder.</p>
+
+<h1>How to use</h1>
+
+<h2>Select a folder</h2>
+<p>Click this button to select a folder that the program is not currently in.</p>
+<p>Then select the folder you would like to clean.</p>
+
+<h2>Use the folder the program is in</h2>
+<p>Click this button to clean the folder that the program is currently in.</p>
+<p>For example, if Folder-Cleaner.jar is in your Downloads folder, it will clean the Downloads folder.</p>
+
+<h2>Configuration</h2>
+<p>To change the configuration, navigate to your <code>Documents/Folder-Cleaner/Config.txt</code>.</p>
+<p>Formatting goes as follows:</p>
+<p><code>Extension = Folder</code></p>
+
+<p>Example: <code>pdf = Text</code></p>
+<p>Example: <code>jpg = Images</code></p>
+
+<p>You may also do folders in folders.</p>
+<p>Example: <code>png = Images/pngs</code></p>
+
+<p>You may also leave comments in the configuration file. Comments start with a #.</p>

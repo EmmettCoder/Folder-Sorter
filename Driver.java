@@ -23,7 +23,7 @@ public class Driver {
     public static void main(String[] args) {
         try {
             Files.createDirectories(documentsPath); // Make the Folder-Sorter folder if it does not already exist.
-            String defaultConfigPath = "Config.txt";
+            String defaultConfigPath = "Resources/Config.txt";
             InputStream is = Driver.class.getResourceAsStream(defaultConfigPath);
             Files.copy(is, configPath);   // Copy Config.txt without replacing old one.
         } catch (IOException e) {
