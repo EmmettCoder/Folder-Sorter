@@ -1,12 +1,6 @@
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
+import java.awt.event.*;
+import java.io.*;
 import javax.swing.*;
 import javax.swing.border.Border;
 
@@ -28,28 +22,29 @@ public class CleanerGUI implements ActionListener {
     private GradientPanel selectContainer;
 
     // Numbers:
-    final Color frameColor = new Color(231, 240, 180);
-    final Color topMenuColor = new Color(167, 173, 130);
-    final Color topMenuOptionColor = new Color(231, 240, 180);
-    final Color paddingColor = new Color(242, 228, 189);
     final Color btnColor = new Color(227, 195, 109);
+    final Color clearColor = new Color(0, 0, 0, 0);
+    final Color frameColor = new Color(231, 240, 180);
     final Color gradientColor1 = new Color(177, 232, 125);
     final Color gradientColor2 = new Color(81, 110, 54);
+    final Color paddingColor = new Color(242, 228, 189);
+    final Color topMenuColor = new Color(167, 173, 130);
+    final Color topMenuOptionColor = new Color(231, 240, 180);
+    
+    final Dimension btnSize = new Dimension(200, 100);
     final Dimension frameStartSize = new Dimension(500, 600);
     final Dimension frameMinimumSize = new Dimension(500, 600);
-    final Dimension btnSize = new Dimension(200, 100);
-    
 
     // Strings:
-    final String frameTitleStr = "Folder Cleaner";
-    final String titleStr = "Welcome to Folder Cleaner";
-    final String configStr = "Configuration";
-    final String openConfigStr = "Open configuration";
-    final String helpStr = "Help";
     final String aboutStr = "About";
-    final String guideStr = "Guide";
-    final String folderChooseStr = "Select a folder";
+    final String configStr = "Configuration";
     final String currentFolderStr = "<html>Use the folder the <br>program is in</html>";
+    final String folderChooseStr = "Select a folder";
+    final String frameTitleStr = "Folder Cleaner";
+    final String guideStr = "Guide";
+    final String helpStr = "Help";
+    final String openConfigStr = "Open configuration";
+    final String titleStr = "Welcome to Folder Cleaner";
 
     String aboutText = ""; // Empty to avoid null.
     String guideText = ""; // Empty to avoid null.
@@ -206,16 +201,16 @@ public class CleanerGUI implements ActionListener {
         selectContainer.setBorder(blackLine);
         selectContainer.setBackground(frameColor);
         chooseBtn.setBackground(btnColor);
-        padding.setBackground(frameColor);
-        currentBtn.setBackground(btnColor);
         chooseBtn.setPreferredSize(btnSize);
+        currentBtn.setBackground(btnColor);
         currentBtn.setPreferredSize(btnSize);
+        padding.setBackground(clearColor);
 
         // Adding to frame:
         frame.add(selectContainer, BorderLayout.CENTER);
         selectContainer.add(chooseBtn, c);
         c.gridy = 1;
-        //selectContainer.add(padding, c);
+        selectContainer.add(padding, c);
         c.gridy = 2;
         selectContainer.add(currentBtn, c);
     }
@@ -257,22 +252,25 @@ public class CleanerGUI implements ActionListener {
         }
     }
 
+    /**
+     * Handles clicking the About button in the Help menu. Displays text to tell what the program does.
+     */
     private void handleAbout() {
         JLabel label = new JLabel(aboutText);
         JOptionPane.showMessageDialog(frame, label, "About", JOptionPane.INFORMATION_MESSAGE);
     }
 
+    /**
+     * Handles clicking the Guide button in the Help menu. Displays text to tell how to use the program.
+     */
     private void handleGuide() {
         JLabel label = new JLabel(guideText);
         JOptionPane.showMessageDialog(frame, label, "Guide", JOptionPane.INFORMATION_MESSAGE);
     }
-
-    private void handleCurrFolder() {
-        // Current directory.
-        String currDirectory = System.getProperty("user.dir");
-        CleanerLogic.cleanThere(currDirectory);
-    }
-
+    
+    /**
+     * Handles clicking 'Select a folder'.
+     */
     private void handleChooseFolder() {
         JFileChooser fileChooser = new JFileChooser();
         // Make the folder chooser only allow selecting folders.
@@ -301,5 +299,14 @@ public class CleanerGUI implements ActionListener {
                                               JOptionPane.INFORMATION_MESSAGE);
             }
         }
+    }
+
+    /**
+     * Handles clicking 'Use the folder the program is in'.
+     */
+    private void handleCurrFolder() {
+        // Current directory.
+        String currDirectory = System.getProperty("user.dir");
+        CleanerLogic.cleanThere(currDirectory);
     }
 }
