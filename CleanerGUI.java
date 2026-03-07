@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.net.URISyntaxException;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -288,7 +289,11 @@ public class CleanerGUI implements ActionListener {
         // Make the folder chooser only allow selecting folders.
         fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         // Set the file chooser to the current directory of the program.
-        fileChooser.setCurrentDirectory(new File(".")); 
+        try {
+        fileChooser.setCurrentDirectory(new File(CleanerGUI.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath())); 
+        } catch (URISyntaxException e) {
+            
+        }
         // Show the file chooser and store the result.
         int fileChoserReturnValue = fileChooser.showOpenDialog(frame);
 
@@ -318,13 +323,16 @@ public class CleanerGUI implements ActionListener {
      */
     private void handleCurrFolder() {
         // Current directory.
-        String currDirectory = System.getProperty("user.dir");
-        CleanerLogic.cleanThere(currDirectory);
-        final String popUpTitle = "Folder Cleaner Result";
-            final String successStr = "Folder " + System.getProperty("user.dir") + " cleaned successfully.";
-            final String failureStr = "Folder " + System.getProperty("user.dir") + " was not cleaned successfully.";
+        String currDirectory;
+        try {
+            File jarFile = new File(CleanerGUI.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+            currDirectory = jarFile.getParent();
+            CleanerLogic.cleanThere(currDirectory);
+            final String popUpTitle = "Folder Cleaner Result";
+            final String successStr = "Folder " + currDirectory + " cleaned successfully.";
+            final String failureStr = "Folder " + currDirectory + " was not cleaned successfully.";
                 
-            if (CleanerLogic.cleanThere(System.getProperty("user.dir"))) {
+            if (CleanerLogic.cleanThere(currDirectory)) {
                 JOptionPane.showMessageDialog(frame, 
                                               successStr, 
                                               popUpTitle, 
@@ -335,5 +343,9 @@ public class CleanerGUI implements ActionListener {
                                               popUpTitle, 
                                               JOptionPane.INFORMATION_MESSAGE);
             }
+        } catch (URISyntaxException e) {
+            
+        }
+        
     }
 }

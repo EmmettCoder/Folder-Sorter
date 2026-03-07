@@ -15,5 +15,5 @@ public class CleanerConstants {
     final static String defaultConfigPath = "/Assets/Config.txt";
     final static String aboutTextPath = "/Assets/About.html";
     final static String guideTextPath = "/Assets/Guide.html";
-    final static String iconPath = "/Assets/Icon.png";
+    final static String iconPath = "/Assets/Icon.png";    
 }
