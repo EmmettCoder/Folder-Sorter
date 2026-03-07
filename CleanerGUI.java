@@ -10,28 +10,31 @@ import javax.swing.border.Border;
  * The main GUI for Folder Cleaner.
  * 
  * @author Emmett Grebe
- * @version 2-19-2026
+ * @version 3-6-2026
  */
 public class CleanerGUI implements ActionListener {
     // Swing components:
-    JFrame frame;
-    JLabel titleLabel, folderLabel, currentFolderLabel;
-    JPanel titlePanel, selectContainer;
-    JMenuBar topMenuBar;
-    JMenu configMenu, helpMenu;
-    JMenuItem openConfigMenuItem, aboutMenuItem, guideMenuItem;
-    JFileChooser folderChooser;
-    JButton chooseBtn, currentBtn;
+    private JButton chooseBtn, currentBtn;
+    private JFrame frame;
+    private JLabel titleLabel;
+    private JMenuBar topMenuBar;
+    private JMenu configMenu, helpMenu;
+    private JMenuItem openConfigMenuItem, aboutMenuItem, guideMenuItem;
+    private JPanel titlePanel, padding;
+    private GradientPanel selectContainer;
 
     // Numbers:
-    final Dimension frameStartSize = new Dimension(500, 600);
-    final Dimension frameMinimumSize = new Dimension(500, 600);
-    final Dimension btnSize = new Dimension(200, 100);
     final Color frameColor = new Color(231, 240, 180);
     final Color topMenuColor = new Color(167, 173, 130);
     final Color topMenuOptionColor = new Color(231, 240, 180);
-    final Color paddingColor = new Color(167, 173, 130);
-    final Color btnColor = new Color(241, 245, 196);
+    final Color paddingColor = new Color(242, 228, 189);
+    final Color btnColor = new Color(227, 195, 109);
+    final Color gradientColor1 = new Color(177, 232, 125);
+    final Color gradientColor2 = new Color(81, 110, 54);
+    final Dimension frameStartSize = new Dimension(500, 600);
+    final Dimension frameMinimumSize = new Dimension(500, 600);
+    final Dimension btnSize = new Dimension(200, 100);
+    
 
     // Strings:
     final String frameTitleStr = "Folder Cleaner";
@@ -73,6 +76,18 @@ public class CleanerGUI implements ActionListener {
         // Styling
         frame.setLayout(new BorderLayout());
         frame.getContentPane().setBackground(frameColor);
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException |
+                 InstantiationException |
+                 IllegalAccessException |
+                 UnsupportedLookAndFeelException e) {
+            int result = JOptionPane.showConfirmDialog(frame, 
+                                              "There was a UIManager error: " + e.getMessage(), 
+                                                "Error", 
+                                                        JOptionPane.OK_OPTION);
+            if (result == JOptionPane.OK_OPTION) frame.dispose();
+        }
     }
 
     /**
@@ -150,8 +165,8 @@ public class CleanerGUI implements ActionListener {
      */
     private void makeFolderSelector() {
         // Constructing:
-        selectContainer = new JPanel();
-        JPanel padding = new JPanel();
+        selectContainer = new GradientPanel(gradientColor1, gradientColor2, new Point(0,0), new Point(frame.getWidth(), frame.getHeight()));
+        padding = new JPanel();
         GridBagConstraints c = new GridBagConstraints();
         chooseBtn = new JButton(folderChooseStr);
         currentBtn = new JButton(currentFolderStr);
@@ -177,7 +192,7 @@ public class CleanerGUI implements ActionListener {
         frame.add(selectContainer, BorderLayout.CENTER);
         selectContainer.add(chooseBtn, c);
         c.gridy = 1;
-        selectContainer.add(padding, c);
+        //selectContainer.add(padding, c);
         c.gridy = 2;
         selectContainer.add(currentBtn, c);
     }
