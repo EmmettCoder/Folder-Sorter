@@ -14,7 +14,7 @@ public class ConfigReader {
      * @return A ConfigObject based off of the Config.txt file.
      */
     public static ConfigObject read() {
-        try (BufferedReader br = new BufferedReader(new FileReader(CleanerConstants.configPath.toString()))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(CleanerConstants.userConfigPath.toString()))) {
             Map<String, String> folderNames = new HashMap<>();
 
             while (br.ready()) {

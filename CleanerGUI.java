@@ -1,7 +1,11 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -47,8 +51,8 @@ public class CleanerGUI implements ActionListener {
     final String folderChooseStr = "Select a folder";
     final String currentFolderStr = "<html>Use the folder the <br>program is in</html>";
 
-    String aboutText;
-    String guideText;
+    String aboutText = ""; // Empty to avoid null.
+    String guideText = ""; // Empty to avoid null.
 
     /**
      * Does all the handler methods in order.
@@ -111,6 +115,9 @@ public class CleanerGUI implements ActionListener {
         aboutMenuItem = new JMenuItem(aboutStr);
         guideMenuItem = new JMenuItem(guideStr);
 
+        aboutMenuItem.addActionListener(this);
+        guideMenuItem.addActionListener(this);
+
         // Style:
         configMenu.setBackground(topMenuColor);
         openConfigMenuItem.setBackground(topMenuOptionColor);
@@ -126,7 +133,18 @@ public class CleanerGUI implements ActionListener {
         topMenuBar.add(helpMenu);
         frame.setJMenuBar(topMenuBar);
 
-        
+        // Put the text from the txt files in Resources.
+        InputStream isAbout = Driver.class.getResourceAsStream(CleanerConstants.aboutTextPath.toString());
+        BufferedReader brAbout = new BufferedReader(new InputStreamReader(isAbout));
+        InputStream isGuide = Driver.class.getResourceAsStream(CleanerConstants.guideTextPath.toString());
+        BufferedReader brGuide = new BufferedReader(new InputStreamReader(isGuide));
+        try {
+            while (brAbout.ready()) aboutText += brAbout.readLine();
+            while (brGuide.ready()) guideText += brGuide.readLine();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -218,10 +236,12 @@ public class CleanerGUI implements ActionListener {
             }
             // Handles about menu button.
             case aboutStr: {
+                handleAbout();
                 break;
             }
             // Handles guide menu button.
             case guideStr: {
+                handleGuide();
                 break;
             }
             // Handles choose folder button.
@@ -235,6 +255,16 @@ public class CleanerGUI implements ActionListener {
             }
 
         }
+    }
+
+    private void handleAbout() {
+        JLabel label = new JLabel(aboutText);
+        JOptionPane.showMessageDialog(frame, label, "About", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void handleGuide() {
+        JLabel label = new JLabel(guideText);
+        JOptionPane.showMessageDialog(frame, label, "Guide", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void handleCurrFolder() {

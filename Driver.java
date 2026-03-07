@@ -21,10 +21,9 @@ public class Driver {
      */
     public static void main(String[] args) {
         try {
-            Files.createDirectories(CleanerConstants.documentsPath); // Make the Folder-Sorter folder if it does not already exist.
-            String defaultConfigPath = "Resources/Config.txt";
-            InputStream is = Driver.class.getResourceAsStream(defaultConfigPath);
-            Files.copy(is, CleanerConstants.configPath);   // Copy Config.txt without replacing old one.
+            Files.createDirectories(CleanerConstants.userDocumentsPath); // Make the Folder-Sorter folder if it does not already exist.
+            InputStream is = Driver.class.getResourceAsStream(CleanerConstants.defaultConfigPath.toString());
+            Files.copy(is, CleanerConstants.userConfigPath);   // Copy Config.txt without replacing old one.
         } catch (IOException e) {
             // TODO make a error pop up here.
         }
