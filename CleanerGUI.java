@@ -27,8 +27,8 @@ public class CleanerGUI implements ActionListener {
     final Color btnColor = new Color(227, 195, 109);
     final Color clearColor = new Color(0, 0, 0, 0);
     final Color frameColor = new Color(231, 240, 180);
-    final Color gradientColor1 = new Color(177, 232, 125);
-    final Color gradientColor2 = new Color(81, 110, 54);
+    final Color gradientColor1 = new Color(102, 183, 255);
+    final Color gradientColor2 = new Color(0, 135, 255);
     final Color paddingColor = new Color(242, 228, 189);
     final Color topMenuColor = new Color(167, 173, 130);
     final Color topMenuOptionColor = new Color(231, 240, 180);
