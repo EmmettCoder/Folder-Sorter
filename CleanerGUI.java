@@ -1,8 +1,9 @@
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
+import java.awt.event.*;
+import java.io.*;
+import java.net.URISyntaxException;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 
@@ -10,43 +11,50 @@ import javax.swing.border.Border;
  * The main GUI for Folder Cleaner.
  * 
  * @author Emmett Grebe
- * @version 2-19-2026
+ * @version 3-6-2026
  */
 public class CleanerGUI implements ActionListener {
     // Swing components:
-    JFrame frame;
-    JLabel titleLabel, folderLabel, currentFolderLabel;
-    JPanel titlePanel, selectContainer;
-    JMenuBar topMenuBar;
-    JMenu configMenu, helpMenu;
-    JMenuItem openConfigMenuItem, aboutMenuItem, guideMenuItem;
-    JFileChooser folderChooser;
-    JButton chooseBtn, currentBtn;
+    private JButton chooseBtn, currentBtn;
+    private JFrame frame;
+    private JLabel titleLabel;
+    private JMenuBar topMenuBar;
+    private JMenu configMenu, helpMenu;
+    private JMenuItem openConfigMenuItem, aboutMenuItem, guideMenuItem;
+    private JPanel titlePanel, padding;
+    private GradientPanel selectContainer;
 
     // Numbers:
-    final Dimension frameStartSize = new Dimension(500, 600);
-    final Dimension frameMinimumSize = new Dimension(500, 600);
-    final Dimension btnSize = new Dimension(200, 100);
+    final Color btnColor = new Color(227, 195, 109);
+    final Color clearColor = new Color(0, 0, 0, 0);
     final Color frameColor = new Color(231, 240, 180);
+    final Color gradientColor1 = new Color(102, 183, 255);
+    final Color gradientColor2 = new Color(0, 135, 255);
+    final Color paddingColor = new Color(242, 228, 189);
     final Color topMenuColor = new Color(167, 173, 130);
     final Color topMenuOptionColor = new Color(231, 240, 180);
-    final Color paddingColor = new Color(167, 173, 130);
-    final Color btnColor = new Color(241, 245, 196);
+    
+    final Dimension btnSize = new Dimension(200, 100);
+    final Dimension frameStartSize = new Dimension(500, 600);
+    final Dimension frameMinimumSize = new Dimension(500, 600);
 
     // Strings:
-    final String frameTitleStr = "Folder Cleaner";
-    final String titleStr = "Welcome to Folder Cleaner";
-    final String configStr = "Configuration";
-    final String openConfigStr = "Open configuration";
-    final String helpStr = "Help";
     final String aboutStr = "About";
-    final String guideStr = "Guide";
-    final String folderChooseStr = "Select a folder";
+    final String configStr = "Configuration";
     final String currentFolderStr = "<html>Use the folder the <br>program is in</html>";
     final String popUpTitle = "Folder Cleaner Result";
     final String confirmTitle = "Are you sure?";
     final String confirmText = "Do not turn off this program or computer while it is cleaning. Are you sure you want to continue?";
         
+    final String folderChooseStr = "Select a folder";
+    final String frameTitleStr = "Folder Cleaner";
+    final String guideStr = "Guide";
+    final String helpStr = "Help";
+    final String openConfigStr = "Open configuration";
+    final String titleStr = "Welcome to Folder Cleaner";
+
+    String aboutText = ""; // Empty to avoid null.
+    String guideText = ""; // Empty to avoid null.
 
     /**
      * Does all the handler methods in order.
@@ -77,6 +85,28 @@ public class CleanerGUI implements ActionListener {
         // Styling
         frame.setLayout(new BorderLayout());
         frame.getContentPane().setBackground(frameColor);
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException |
+                 InstantiationException |
+                 IllegalAccessException |
+                 UnsupportedLookAndFeelException e) {
+            int result = JOptionPane.showConfirmDialog(frame, 
+                                              "There was a UIManager error: " + e.getMessage(), 
+                                                "Error", 
+                                                        JOptionPane.OK_OPTION);
+            if (result == JOptionPane.OK_OPTION) frame.dispose();
+        }
+
+        // Icon
+        InputStream imgStream = getClass().getResourceAsStream(CleanerConstants.iconPath);
+        try {
+            Image iconImage = ImageIO.read(imgStream);
+            frame.setIconImage(iconImage);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -97,6 +127,9 @@ public class CleanerGUI implements ActionListener {
         aboutMenuItem = new JMenuItem(aboutStr);
         guideMenuItem = new JMenuItem(guideStr);
 
+        aboutMenuItem.addActionListener(this);
+        guideMenuItem.addActionListener(this);
+
         // Style:
         configMenu.setBackground(topMenuColor);
         openConfigMenuItem.setBackground(topMenuOptionColor);
@@ -111,6 +144,19 @@ public class CleanerGUI implements ActionListener {
         topMenuBar.add(configMenu);
         topMenuBar.add(helpMenu);
         frame.setJMenuBar(topMenuBar);
+
+        // Put the text from the txt files in Resources.
+        InputStream isAbout = CleanerGUI.class.getResourceAsStream(CleanerConstants.aboutTextPath);
+        BufferedReader brAbout = new BufferedReader(new InputStreamReader(isAbout));
+        InputStream isGuide = CleanerGUI.class.getResourceAsStream(CleanerConstants.guideTextPath);
+        BufferedReader brGuide = new BufferedReader(new InputStreamReader(isGuide));
+        try {
+            while (brAbout.ready()) aboutText += brAbout.readLine();
+            while (brGuide.ready()) guideText += brGuide.readLine();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -154,8 +200,8 @@ public class CleanerGUI implements ActionListener {
      */
     private void makeFolderSelector() {
         // Constructing:
-        selectContainer = new JPanel();
-        JPanel padding = new JPanel();
+        selectContainer = new GradientPanel(gradientColor1, gradientColor2, new Point(0,0), new Point(frame.getWidth(), frame.getHeight()));
+        padding = new JPanel();
         GridBagConstraints c = new GridBagConstraints();
         chooseBtn = new JButton(folderChooseStr);
         currentBtn = new JButton(currentFolderStr);
@@ -172,10 +218,10 @@ public class CleanerGUI implements ActionListener {
         selectContainer.setBorder(blackLine);
         selectContainer.setBackground(frameColor);
         chooseBtn.setBackground(btnColor);
-        padding.setBackground(frameColor);
-        currentBtn.setBackground(btnColor);
         chooseBtn.setPreferredSize(btnSize);
+        currentBtn.setBackground(btnColor);
         currentBtn.setPreferredSize(btnSize);
+        padding.setBackground(clearColor);
 
         // Adding to frame:
         frame.add(selectContainer, BorderLayout.CENTER);
@@ -188,7 +234,7 @@ public class CleanerGUI implements ActionListener {
 
     /**
      * Handles button presses. Does not do the logic behind each button. Logic is
-     * delegated to each action's seperate method for readability.
+     * delegated to each action's separate method for readability.
      * 
      * @param e The ActionEvent.
      */
@@ -202,10 +248,12 @@ public class CleanerGUI implements ActionListener {
             }
             // Handles about menu button.
             case aboutStr: {
+                handleAbout();
                 break;
             }
             // Handles guide menu button.
             case guideStr: {
+                handleGuide();
                 break;
             }
             // Handles choose folder button.
@@ -219,29 +267,37 @@ public class CleanerGUI implements ActionListener {
             }
 
         }
-    }
-
-    private void handleCurrFolder() {
-        int result = JOptionPane.showConfirmDialog(frame, 
-                                                   confirmText, 
-                                                   confirmTitle, 
-                                                   JOptionPane.YES_NO_OPTION);
-        if (result == JOptionPane.YES_OPTION) {
-            // Current directory.
-            String currDirectory = System.getProperty("user.dir");
-            CleanerLogic.cleanThere(currDirectory);
-        } else {
-            
-        }
+    }        
         
+    /**
+     * Handles clicking the About button in the Help menu. Displays text to tell what the program does.
+     */
+    private void handleAbout() {
+        JLabel label = new JLabel(aboutText);
+        JOptionPane.showMessageDialog(frame, label, "About", JOptionPane.INFORMATION_MESSAGE);
     }
 
+    /**
+     * Handles clicking the Guide button in the Help menu. Displays text to tell how to use the program.
+     */
+    private void handleGuide() {
+        JLabel label = new JLabel(guideText);
+        JOptionPane.showMessageDialog(frame, label, "Guide", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    /**
+     * Handles clicking 'Select a folder'.
+     */
     private void handleChooseFolder() {
         JFileChooser fileChooser = new JFileChooser();
         // Make the folder chooser only allow selecting folders.
         fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         // Set the file chooser to the current directory of the program.
-        fileChooser.setCurrentDirectory(new File(".")); 
+        try {
+        fileChooser.setCurrentDirectory(new File(CleanerGUI.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath())); 
+        } catch (URISyntaxException e) {
+            
+        }
         // Show the file chooser and store the result.
         int fileChoserReturnValue = fileChooser.showOpenDialog(frame);
 
@@ -264,4 +320,41 @@ public class CleanerGUI implements ActionListener {
             }
         }
     }
+
+    /**
+     * Handles clicking 'Use the folder the program is in'.
+     */
+    private void handleCurrFolder() {
+        int result = JOptionPane.showConfirmDialog(frame, 
+                                                   confirmText, 
+                                                   confirmTitle, 
+                                                   JOptionPane.YES_NO_OPTION);
+        if (result == JOptionPane.YES_OPTION) {
+        // Current directory.
+        String currDirectory;
+        try {
+            File jarFile = new File(CleanerGUI.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+            currDirectory = jarFile.getParent();
+            CleanerLogic.cleanThere(currDirectory);
+            final String popUpTitle = "Folder Cleaner Result";
+            final String successStr = "Folder " + currDirectory + " cleaned successfully.";
+            final String failureStr = "Folder " + currDirectory + " was not cleaned successfully.";
+                
+            if (CleanerLogic.cleanThere(currDirectory)) {
+                JOptionPane.showMessageDialog(frame, 
+                                              successStr, 
+                                              popUpTitle, 
+                                              JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(frame, 
+                                              failureStr, 
+                                              popUpTitle, 
+                                              JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (URISyntaxException e) {
+            
+        }
+    }
+    } 
+    
 }
