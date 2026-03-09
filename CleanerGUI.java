@@ -11,7 +11,7 @@ import javax.swing.border.Border;
  * The main GUI for Folder Cleaner.
  * 
  * @author Emmett Grebe
- * @version 3-6-2026
+ * @version 3-9-2026
  */
 public class CleanerGUI implements ActionListener {
     // Swing components:

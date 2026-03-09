@@ -6,12 +6,10 @@ import java.util.Collection;
  * Handles all cleaning logic.
  * 
  * @author Emmett Grebe
- * @version 3-5-2026
+ * @version 3-9-2026
  */
 public class CleanerLogic {
     static ConfigObject co;
-
-    final static String jarName = "Folder-Cleaner";
 
     /**
      * Cleans the given folder.
@@ -35,8 +33,6 @@ public class CleanerLogic {
                 String[] fileSplit = f.getName().split("\\.");
 
                 String destBeginning = f.getAbsolutePath().substring(0, destinationFirstHalf);
-
-                if (destBeginning.equals(jarName)) continue;   // Check if the file is this program. If so, skip it.
                 
                 if (fileSplit.length > 1) {                                                 // If the file name has an extension. If not, skip.
                     String destFolder = co.getFolderName(fileSplit[fileSplit.length - 1]);  // Get the folder for the file's extension.

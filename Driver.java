@@ -1,5 +1,4 @@
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.file.Files;
 
 import javax.swing.JOptionPane;
@@ -8,7 +7,7 @@ import javax.swing.JOptionPane;
  * The driver for Folder Cleaner.
  * 
  * @author Emmett Grebe
- * @version 2-19-2026
+ * @version 3-9-2026
  */
 public class Driver {
 
