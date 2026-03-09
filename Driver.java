@@ -2,6 +2,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 
+import javax.swing.JOptionPane;
+
 /**
  * The driver for Folder Cleaner.
  * 
@@ -27,7 +29,12 @@ public class Driver {
                 Files.copy(is, CleanerConstants.userConfigPath);
             } 
         } catch (IOException e) {
-            // TODO make a error pop up here.
+            int result = JOptionPane.showConfirmDialog(null,
+                    "There was a error when trying to make config file: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.OK_OPTION);
+            if (result == JOptionPane.OK_OPTION)
+                return; // Stops program from making GUI if the config is never made.
         }
 
         // Make and show the GUI.

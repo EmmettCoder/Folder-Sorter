@@ -60,6 +60,8 @@ public class CleanerLogic {
                             int lastOpenParen = baseName.lastIndexOf("(");
                             int lastCloseParen = baseName.lastIndexOf(")");
 
+                            // If last open and close parenthesis exist.
+                            // If the last close parenthesis comes after the first parenthesis.
                             if (lastOpenParen != -1 && lastCloseParen != -1 && lastCloseParen > lastOpenParen) {
                                 try {
                                     String numStr = baseName.substring(lastOpenParen + 1, lastCloseParen).trim(); // Extract the string between ( and )

@@ -30,7 +30,7 @@ public class CleanerGUI implements ActionListener {
     final Color frameColor = new Color(231, 240, 180);
     final Color gradientColor1 = new Color(102, 183, 255);
     final Color gradientColor2 = new Color(0, 135, 255);
-    final Color paddingColor = new Color(242, 228, 189);
+    final Color paddingColor = new Color(191, 216, 255);
     final Color topMenuColor = new Color(167, 173, 130);
     final Color topMenuOptionColor = new Color(231, 240, 180);
 
@@ -41,15 +41,15 @@ public class CleanerGUI implements ActionListener {
     // Strings:
     final String aboutStr = "About";
     final String configStr = "Configuration";
-    final String currentFolderStr = "<html>Use the folder the <br>program is in</html>";
-    final String popUpTitle = "Folder Cleaner Result";
-    final String confirmTitle = "Are you sure?";
     final String confirmText = "Do not turn off this program or computer while it is cleaning. Are you sure you want to continue?";
+    final String confirmTitle = "Are you sure?";
+    final String currentFolderStr = "<html>Use the folder the <br>program is in</html>";
     final String folderChooseStr = "Select a folder";
     final String frameTitleStr = "Folder Cleaner";
     final String guideStr = "Guide";
     final String helpStr = "Help";
     final String openConfigStr = "Open configuration";
+    final String popUpTitle = "Folder Cleaner Result";
     final String titleStr = "Welcome to Folder Cleaner";
 
     String aboutText = ""; // Empty to avoid null.
@@ -57,7 +57,7 @@ public class CleanerGUI implements ActionListener {
 
     /**
      * Does all the handler methods in order.
-     * Handler methods are seperated by category for ease of finding them.
+     * Handler methods are separated by category for ease of finding them.
      */
     public void makeGUI() {
         makeFrame();
@@ -102,7 +102,7 @@ public class CleanerGUI implements ActionListener {
             Image iconImage = ImageIO.read(imgStream);
             frame.setIconImage(iconImage);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
+            // This will never happen if the Jar is not tampered with.
             e.printStackTrace();
         }
     }
@@ -154,7 +154,7 @@ public class CleanerGUI implements ActionListener {
             while (brGuide.ready())
                 guideText += brGuide.readLine();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
+            // This will never happen if the Jar is never tampered with.
             e.printStackTrace();
         }
     }
