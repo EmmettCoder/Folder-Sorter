@@ -43,6 +43,10 @@ public class CleanerGUI implements ActionListener {
     final String guideStr = "Guide";
     final String folderChooseStr = "Select a folder";
     final String currentFolderStr = "<html>Use the folder the <br>program is in</html>";
+    final String popUpTitle = "Folder Cleaner Result";
+    final String confirmTitle = "Are you sure?";
+    final String confirmText = "Do not turn off this program or computer while it is cleaning. Are you sure you want to continue?";
+        
 
     /**
      * Does all the handler methods in order.
@@ -218,9 +222,18 @@ public class CleanerGUI implements ActionListener {
     }
 
     private void handleCurrFolder() {
-        // Current directory.
-        String currDirectory = System.getProperty("user.dir");
-        CleanerLogic.cleanThere(currDirectory);
+        int result = JOptionPane.showConfirmDialog(frame, 
+                                                   confirmText, 
+                                                   confirmTitle, 
+                                                   JOptionPane.YES_NO_OPTION);
+        if (result == JOptionPane.YES_OPTION) {
+            // Current directory.
+            String currDirectory = System.getProperty("user.dir");
+            CleanerLogic.cleanThere(currDirectory);
+        } else {
+            
+        }
+        
     }
 
     private void handleChooseFolder() {
@@ -235,7 +248,6 @@ public class CleanerGUI implements ActionListener {
         // If user clicks yes, clean selected folder.
         if (fileChoserReturnValue == JFileChooser.APPROVE_OPTION) {
             File selectedFolder = fileChooser.getSelectedFile();
-            final String popUpTitle = "Folder Cleaner Result";
             final String successStr = "Folder " + selectedFolder.getName() + " cleaned successfully.";
             final String failureStr = "Folder " + selectedFolder.getName() + " was not cleaned successfully.";
                 
