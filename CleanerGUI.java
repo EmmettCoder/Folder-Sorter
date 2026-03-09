@@ -245,7 +245,7 @@ public class CleanerGUI implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
         switch (command) {
-            // Handles open congiguration menu button.
+            // Handles open configuration menu button.
             case openConfigStr: {
                 handleOpenConfig();
                 break;
@@ -321,10 +321,10 @@ public class CleanerGUI implements ActionListener {
 
         }
         // Show the file chooser and store the result.
-        int fileChoserReturnValue = fileChooser.showOpenDialog(frame);
+        int fileChooserReturnValue = fileChooser.showOpenDialog(frame);
 
         // If user clicks yes, clean selected folder.
-        if (fileChoserReturnValue == JFileChooser.APPROVE_OPTION) {
+        if (fileChooserReturnValue == JFileChooser.APPROVE_OPTION) {
             int result = JOptionPane.showConfirmDialog(frame,
                     confirmText,
                     confirmTitle,
