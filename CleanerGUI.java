@@ -44,6 +44,7 @@ public class CleanerGUI implements ActionListener {
     final String confirmText = "Do not turn off this program or computer while it is cleaning. Are you sure you want to continue?";
     final String confirmTitle = "Are you sure?";
     final String currentFolderStr = "<html>Use the folder the <br>program is in</html>";
+    final String errorTitle = "Error";
     final String folderChooseStr = "Select a folder";
     final String frameTitleStr = "Folder Cleaner";
     final String guideStr = "Guide";
@@ -90,7 +91,7 @@ public class CleanerGUI implements ActionListener {
                 | UnsupportedLookAndFeelException e) {
             int result = JOptionPane.showConfirmDialog(frame,
                     "There was a UIManager error: " + e.getMessage(),
-                    "Error",
+                    errorTitle,
                     JOptionPane.OK_OPTION);
             if (result == JOptionPane.OK_OPTION)
                 frame.dispose();
@@ -125,6 +126,7 @@ public class CleanerGUI implements ActionListener {
         aboutMenuItem = new JMenuItem(aboutStr);
         guideMenuItem = new JMenuItem(guideStr);
 
+        openConfigMenuItem.addActionListener(this);
         aboutMenuItem.addActionListener(this);
         guideMenuItem.addActionListener(this);
 
@@ -245,6 +247,7 @@ public class CleanerGUI implements ActionListener {
         switch (command) {
             // Handles open congiguration menu button.
             case openConfigStr: {
+                handleOpenConfig();
                 break;
             }
             // Handles about menu button.
@@ -286,6 +289,21 @@ public class CleanerGUI implements ActionListener {
     private void handleGuide() {
         JLabel label = new JLabel(guideText);
         JOptionPane.showMessageDialog(frame, label, "Guide", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    /**
+     * Handles opening configuration file.
+     */
+    private void handleOpenConfig() {
+        File configFile = new File(CleanerConstants.userConfigPath.toString());
+        try {
+            Desktop.getDesktop().open(configFile);
+        } catch (IOException e) {
+            JOptionPane.showConfirmDialog(null,
+                    "There was a error when trying to open the config file. You can also open the file through Documents/Folder-Sorter/Config.txt: " + e.getMessage(),
+                    errorTitle,
+                    JOptionPane.OK_OPTION);
+        }
     }
 
     /**
