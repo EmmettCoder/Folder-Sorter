@@ -1,5 +1,8 @@
+package Objects;
 import java.io.*;
 import java.util.*;
+
+import Logic.CleanerConstants;
 
 /**
  * Reads the Config.txt and makes a ConfigObject.

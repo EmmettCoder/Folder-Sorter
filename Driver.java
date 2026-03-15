@@ -3,6 +3,9 @@ import java.nio.file.Files;
 
 import javax.swing.JOptionPane;
 
+import GUI.CleanerGUI;
+import Logic.CleanerConstants;
+
 /**
  * The driver for Folder Cleaner.
  * 

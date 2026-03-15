@@ -1,3 +1,4 @@
+package GUI;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
@@ -6,6 +7,9 @@ import java.net.URISyntaxException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
+
+import Logic.CleanerConstants;
+import Logic.CleanerLogic;
 
 /**
  * The main GUI for Folder Cleaner.

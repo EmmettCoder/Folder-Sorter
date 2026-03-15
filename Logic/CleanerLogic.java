@@ -1,6 +1,10 @@
+package Logic;
 import java.io.*;
 import java.nio.file.*;
 import java.util.Collection;
+
+import Objects.ConfigObject;
+import Objects.ConfigReader;
 
 /**
  * Handles all cleaning logic.
