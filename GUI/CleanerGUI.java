@@ -29,9 +29,9 @@ public class CleanerGUI implements ActionListener {
     private GradientPanel selectContainer;
 
     // Numbers:
-    private final Color btnColor = new Color(227, 195, 109);
+    private final Color btnColor = new Color(102, 183, 255);
     private final Color clearColor = new Color(0, 0, 0, 0);
-    private final Color frameColor = new Color(231, 240, 180);
+    private final Color frameColor = new Color(102, 183, 255);
     private final Color gradientColor1 = new Color(102, 183, 255);
     private final Color gradientColor2 = new Color(0, 135, 255);
     private final Color paddingColor = new Color(191, 216, 255);

@@ -24,8 +24,6 @@ public class Driver {
             Files.createDirectories(CleanerConstants.userDocumentsPath); // Make the Folder-Sorter folder if it does not
                                                                          // already exist.
             InputStream is = Driver.class.getResourceAsStream(CleanerConstants.defaultConfigPath);
-            System.out.println(CleanerConstants.userConfigPath.toString());
-            System.out.println(CleanerConstants.defaultConfigPath.toString());
 
             if (Files.notExists(CleanerConstants.userConfigPath)) {    // Copy Config.txt without replacing old one.
                 Files.copy(is, CleanerConstants.userConfigPath);
