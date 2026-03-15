@@ -15,7 +15,7 @@ import Logic.CleanerLogic;
  * The main GUI for Folder Cleaner.
  * 
  * @author Emmett Grebe
- * @version 3-9-2026
+ * @version 3-15-2026
  */
 public class CleanerGUI implements ActionListener {
     // Swing components:
@@ -29,36 +29,36 @@ public class CleanerGUI implements ActionListener {
     private GradientPanel selectContainer;
 
     // Numbers:
-    final Color btnColor = new Color(227, 195, 109);
-    final Color clearColor = new Color(0, 0, 0, 0);
-    final Color frameColor = new Color(231, 240, 180);
-    final Color gradientColor1 = new Color(102, 183, 255);
-    final Color gradientColor2 = new Color(0, 135, 255);
-    final Color paddingColor = new Color(191, 216, 255);
-    final Color topMenuColor = new Color(167, 173, 130);
-    final Color topMenuOptionColor = new Color(231, 240, 180);
+    private final Color btnColor = new Color(227, 195, 109);
+    private final Color clearColor = new Color(0, 0, 0, 0);
+    private final Color frameColor = new Color(231, 240, 180);
+    private final Color gradientColor1 = new Color(102, 183, 255);
+    private final Color gradientColor2 = new Color(0, 135, 255);
+    private final Color paddingColor = new Color(191, 216, 255);
+    private final Color topMenuColor = new Color(167, 173, 130);
+    private final Color topMenuOptionColor = new Color(231, 240, 180);
 
-    final Dimension btnSize = new Dimension(200, 100);
-    final Dimension frameStartSize = new Dimension(500, 600);
-    final Dimension frameMinimumSize = new Dimension(500, 600);
+    private final Dimension btnSize = new Dimension(200, 100);
+    private final Dimension frameStartSize = new Dimension(500, 600);
+    private final Dimension frameMinimumSize = new Dimension(500, 600);
 
     // Strings:
-    final String aboutStr = "About";
-    final String configStr = "Configuration";
-    final String confirmText = "Do not turn off this program or computer while it is cleaning. Are you sure you want to continue?";
-    final String confirmTitle = "Are you sure?";
-    final String currentFolderStr = "<html>Use the folder the <br>program is in</html>";
-    final String errorTitle = "Error";
-    final String folderChooseStr = "Select a folder";
-    final String frameTitleStr = "Folder Cleaner";
-    final String guideStr = "Guide";
-    final String helpStr = "Help";
-    final String openConfigStr = "Open configuration";
-    final String popUpTitle = "Folder Cleaner Result";
-    final String titleStr = "Welcome to Folder Cleaner";
+    private final String aboutStr = "About";
+    private final String configStr = "Configuration";
+    private final String confirmText = "Do not turn off this program or computer while it is cleaning. Are you sure you want to continue?";
+    private final String confirmTitle = "Are you sure?";
+    private final String currentFolderStr = "<html>Use the folder the <br>program is in</html>";
+    private final String errorTitle = "Error";
+    private final String folderChooseStr = "Select a folder";
+    private final String frameTitleStr = "Folder Cleaner";
+    private final String guideStr = "Guide";
+    private final String helpStr = "Help";
+    private final String openConfigStr = "Open configuration";
+    private final String popUpTitle = "Folder Cleaner Result";
+    private final String titleStr = "Welcome to Folder Cleaner";
 
-    String aboutText = ""; // Empty to avoid null.
-    String guideText = ""; // Empty to avoid null.
+    private String aboutText = ""; // Empty to avoid null.
+    private String guideText = ""; // Empty to avoid null.
 
     /**
      * Does all the handler methods in order.
