@@ -299,15 +299,16 @@ public class CleanerGUI implements ActionListener {
      * Handles opening configuration file.
      */
     private void handleOpenConfig() {
-        File configFile = new File(CleanerConstants.userConfigPath.toString());
-        try {
-            Desktop.getDesktop().open(configFile);
-        } catch (IOException e) {
-            JOptionPane.showConfirmDialog(null,
-                    "There was a error when trying to open the config file. You can also open the file through Documents/Folder-Sorter/Config.txt: " + e.getMessage(),
-                    errorTitle,
-                    JOptionPane.OK_OPTION);
-        }
+        ConfigGUI.makeGUI();
+        // File configFile = new File(CleanerConstants.userConfigPath.toString());
+        // try {
+        //     Desktop.getDesktop().open(configFile);
+        // } catch (IOException e) {
+        //     JOptionPane.showConfirmDialog(null,
+        //             "There was a error when trying to open the config file. You can also open the file through Documents/Folder-Sorter/Config.txt: " + e.getMessage(),
+        //             errorTitle,
+        //             JOptionPane.OK_OPTION);
+        // }
     }
 
     /**
