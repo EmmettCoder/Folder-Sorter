@@ -13,7 +13,7 @@ import Objects.ConfigReader;
  * @version 3-9-2026
  */
 public class CleanerLogic {
-    static ConfigObject co;
+    private static ConfigObject co;
 
     /**
      * Cleans the given folder.
