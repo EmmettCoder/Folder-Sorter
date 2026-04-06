@@ -3,8 +3,8 @@ import java.io.*;
 import java.nio.file.*;
 import java.util.Collection;
 
-import Objects.ConfigObject;
-import Objects.ConfigReader;
+import Objects.Config.ConfigObject;
+import Objects.Config.ConfigReader;
 
 /**
  * Handles all cleaning logic.
@@ -110,6 +110,14 @@ public class CleanerLogic {
         }
 
         return true;
+    }
+
+    /**
+     * Undoes previous clean.
+     * @return True if successful, false if not.
+     */
+    public static boolean undoClean() {
+        return false;
     }
 
     /**
