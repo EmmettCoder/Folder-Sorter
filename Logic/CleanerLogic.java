@@ -4,13 +4,12 @@ import java.nio.file.*;
 import java.util.Collection;
 
 import Objects.Config.ConfigObject;
-import Objects.Config.ConfigReader;
 
 /**
  * Handles all cleaning logic.
  * 
  * @author Emmett Grebe
- * @version 3-9-2026
+ * @version 4-6-2026
  */
 public class CleanerLogic {
     private static ConfigObject co;
@@ -21,7 +20,7 @@ public class CleanerLogic {
      * @param folderPath
      */
     public static boolean cleanThere(String directory) {
-        co = ConfigReader.read();
+        co = new ConfigObject();
         File[] files = new File(directory).listFiles();     // All files in the directory.
 
         makeFolders(directory);
