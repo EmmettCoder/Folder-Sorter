@@ -1,4 +1,4 @@
-package Objects;
+package Objects.Config;
 import java.util.*;
 
 /**
