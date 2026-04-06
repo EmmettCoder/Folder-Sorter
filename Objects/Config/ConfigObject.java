@@ -1,7 +1,6 @@
 package Objects.Config;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+
+import java.io.*;
 import java.util.*;
 
 import Logic.CleanerConstants;
@@ -9,6 +8,10 @@ import Logic.CleanerConstants;
 /**
  * Config object for Folder Cleaner. Using this instead of a normal hashmap so
  * it will be immutable. Once the object is made, the hashmap is inaccessible.
+ * This object has it's read functionality built in, instead of having a
+ * ConfigReader. This is because the logic in both are so small it makes more
+ * sense to have it be in one class. If the functionality increases, they will
+ * be split back up again.
  * 
  * @author Emmett Grebe
  * @version 4-6-2026
