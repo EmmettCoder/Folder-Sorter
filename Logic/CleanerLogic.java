@@ -124,10 +124,7 @@ public class CleanerLogic {
      */
     public static boolean undoClean() {
         if (uo == null) return false;
-        for (Path newPath : uo.getPreviousPaths().keySet()) {
-            uo.putBack(newPath, uo.getPreviousPaths().get(newPath));
-        }
-        return true;
+        return uo.undoAll();
     }
 
     /**
@@ -142,6 +139,7 @@ public class CleanerLogic {
         for (String currFolder : foldersList) {                                       // Iterate over each folder.
             try {
                 Path folderPath = Paths.get(directory + File.separator + currFolder); // Make the path of the new folder in the directory given.
+                if (Files.notExists(folderPath)) uo.addFolderMade(folderPath);        // If the folder was not already there, add it to the new folders list.
                 Files.createDirectories(folderPath);                                  // Make the folder in the directory given.
             } catch (IOException ioe) {
                 return false;
