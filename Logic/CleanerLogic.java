@@ -2,17 +2,20 @@ package Logic;
 import java.io.*;
 import java.nio.file.*;
 import java.util.Collection;
+import java.util.Map;
 
 import Objects.Config.ConfigObject;
+import Objects.Undo.UndoObject;
 
 /**
  * Handles all cleaning logic.
  * 
  * @author Emmett Grebe
- * @version 4-6-2026
+ * @version 4-11-2026
  */
 public class CleanerLogic {
     private static ConfigObject co;
+    private static UndoObject uo;
 
     /**
      * Cleans the given folder.
@@ -21,6 +24,7 @@ public class CleanerLogic {
      */
     public static boolean cleanThere(String directory) {
         co = new ConfigObject();
+        uo = new UndoObject();
         File[] files = new File(directory).listFiles();     // All files in the directory.
 
         makeFolders(directory);
@@ -50,6 +54,7 @@ public class CleanerLogic {
 
                         try {
                             Files.move(source, destination);
+                            uo.setPreviousPath(destination, f.toPath());
                         } catch (FileAlreadyExistsException faee) {      // If the file already exists, add a 1 to the end of the filename.
                             // Get the base name (everything before the last dot)
                             String baseName = fileSplit[0];
@@ -61,6 +66,7 @@ public class CleanerLogic {
 
                             // If last open and close parenthesis exist.
                             // If the last close parenthesis comes after the first parenthesis.
+                            String newName = null;
                             if (lastOpenParen != -1 && lastCloseParen != -1 && lastCloseParen > lastOpenParen) {
                                 try {
                                     String numStr = baseName.substring(lastOpenParen + 1, lastCloseParen).trim(); // Extract the string between ( and )
@@ -70,31 +76,29 @@ public class CleanerLogic {
                                     
                                     String cleanBaseName = baseName.substring(0, lastOpenParen).trim();   // Strip the old (n) from the base name
 
+                                    newName = cleanBaseName + " (" + newNum + ")." + extension;
                                     destination = Paths.get(destBeginning + 
                                                             File.separator + 
                                                             destFolder + 
                                                             File.separator + 
-                                                            cleanBaseName +
-                                                            " (" + newNum + ")." + 
-                                                            extension);
+                                                            newName);
                                 } catch (NumberFormatException e) {     // If the stuff in () wasn't actually a number, treat it as a new file
+                                    newName = baseName + " (1)." + extension;
                                     destination = Paths.get(destBeginning + 
                                                             File.separator + 
                                                             destFolder + 
                                                             File.separator + 
-                                                            baseName + 
-                                                            " (1)." + 
-                                                            extension);
+                                                            newName);
                                 }
                             } else {   // No parentheses found, start with (1)
                                 
                                 destination = Paths
                                         .get(destBeginning + File.separator + destFolder + File.separator + baseName + " (1)." + extension);
                             }
-
-                            
+   
                             try {  // Attempt the move with the new destination
                                 Files.move(source, destination);
+                                uo.setPreviousPath(destination, f.toPath());
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -103,12 +107,15 @@ public class CleanerLogic {
                         }
                     }
                 }
-
             }
-
         }
 
         return true;
+    }
+
+    public static void setupUndo() {
+        uo = new UndoObject();
+        
     }
 
     /**
@@ -116,7 +123,11 @@ public class CleanerLogic {
      * @return True if successful, false if not.
      */
     public static boolean undoClean() {
-        return false;
+        if (uo == null) return false;
+        for (Path newPath : uo.getPreviousPaths().keySet()) {
+            uo.putBack(newPath, uo.getPreviousPaths().get(newPath));
+        }
+        return true;
     }
 
     /**
