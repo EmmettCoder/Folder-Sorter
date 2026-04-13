@@ -10,7 +10,7 @@ import java.util.*;
  * Object for storing undo data. Stores previous locations of files.
  * 
  * @author Emmett Grebe
- * @version 4-11-2026
+ * @version 4-13-2026
  */
 public class UndoObject {
     private Map<String, String> previousNames;
@@ -108,6 +108,7 @@ public class UndoObject {
         try {
             // Returns true if it deleted it, false if it didn't exist
             boolean deleted = Files.deleteIfExists(folderPath);
+
             return deleted;
         } catch (DirectoryNotEmptyException e) {
             // This happens if there are still files inside

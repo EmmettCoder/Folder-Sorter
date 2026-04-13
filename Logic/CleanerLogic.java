@@ -2,7 +2,6 @@ package Logic;
 import java.io.*;
 import java.nio.file.*;
 import java.util.Collection;
-import java.util.Map;
 
 import Objects.Config.ConfigObject;
 import Objects.Undo.UndoObject;
@@ -11,7 +10,7 @@ import Objects.Undo.UndoObject;
  * Handles all cleaning logic.
  * 
  * @author Emmett Grebe
- * @version 4-11-2026
+ * @version 4-13-2026
  */
 public class CleanerLogic {
     private static ConfigObject co;
@@ -136,13 +135,24 @@ public class CleanerLogic {
      */
     private static boolean makeFolders(String directory) {
         Collection<String> foldersList = co.getAllFolderNames();                      // Get all the folder names and their correlated extension.
+        Path basePath = Paths.get(directory);
+
+       
         for (String currFolder : foldersList) {                                       // Iterate over each folder.
-            try {
-                Path folderPath = Paths.get(directory + File.separator + currFolder); // Make the path of the new folder in the directory given.
-                if (Files.notExists(folderPath)) uo.addFolderMade(folderPath);        // If the folder was not already there, add it to the new folders list.
-                Files.createDirectories(folderPath);                                  // Make the folder in the directory given.
-            } catch (IOException ioe) {
-                return false;
+            Path relativePath = Paths.get(currFolder);                                // Using relativePath and currWalkPath helps the program know which was made
+            Path currWalkPath = basePath;                                             // by it and which are to be left alone if undo is pressed.
+                                                                                      // relativePath is the whole path to the new folder.
+                                                                                      // currWalkPath is the same path, but starts at the top parent.
+            for (int i = 0; i < relativePath.getNameCount(); i++) {                   // getNameCount() gets the num of each individual subdirectory.
+                currWalkPath = currWalkPath.resolve(relativePath.getName(i));
+                try {                               
+                    if (Files.notExists(currWalkPath)) {                                  // If the folder was not already there, add it to the new folders list.
+                        uo.addFolderMade(currWalkPath);
+                        Files.createDirectory(currWalkPath);                              // Make the folder in the directory given.
+                    }
+                } catch (IOException ioe) {
+                    return false;
+                }
             }
         }
         return true;
