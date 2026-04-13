@@ -112,11 +112,6 @@ public class CleanerLogic {
         return true;
     }
 
-    public static void setupUndo() {
-        uo = new UndoObject();
-        
-    }
-
     /**
      * Undoes previous clean.
      * @return True if successful, false if not.
