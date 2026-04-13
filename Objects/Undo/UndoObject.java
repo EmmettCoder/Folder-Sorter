@@ -27,18 +27,6 @@ public class UndoObject {
     }
 
     /**
-     * Gets the previous path of a file.
-     * 
-     * @param newFileName The new file name. If the file was never renamed, then
-     *                    just give the name.
-     * @return A path to where the file previously was before the sort.
-     */
-    public Path getPreviousPath(String newFileName) {
-        // New file name -> Old file name -> Old file path.
-        return this.previousPaths.get(previousNames.get(newFileName));
-    }
-
-    /**
      * Get the previous file names.
      * 
      * @return A map of the previous file names with their new names. (new name :
@@ -71,10 +59,22 @@ public class UndoObject {
         this.previousPaths.put(newPath, oldPath);
     }
 
+    /**
+     * Adds a folder made by the program to the list.
+     * This is only to be used when the folder was just made by the previous clean.
+     * 
+     * @param folderPath
+     */
     public void addFolderMade(Path folderPath) {
         this.foldersMade.add(folderPath);
     }
 
+    /**
+     * Undoes the previous clean. Puts the files back, then deletes the folders
+     * made.
+     * 
+     * @return True if successful, false otherwise.
+     */
     public boolean undoAll() {
         for (Path newPath : previousPaths.keySet()) {
             if (!putFileBack(newPath, previousPaths.get(newPath))) {
@@ -90,6 +90,13 @@ public class UndoObject {
         return true;
     }
 
+    /**
+     * Puts one file back.
+     * 
+     * @param newPath The path to the new (current) spot the file is in.
+     * @param oldPath The path to where the file used to be.
+     * @return True if successful, false otherwise.
+     */
     public boolean putFileBack(Path newPath, Path oldPath) {
         if ((newPath == null) || (oldPath == null))
             return false;
@@ -101,6 +108,12 @@ public class UndoObject {
         }
     }
 
+    /**
+     * Deletes a folder made by the program.
+     * 
+     * @param folderPath The path to the folder.
+     * @return True if successful, false otherwise.
+     */
     public boolean deleteFolder(Path folderPath) {
         if (folderPath == null)
             return false;
