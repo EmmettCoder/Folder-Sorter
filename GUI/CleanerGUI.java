@@ -12,8 +12,8 @@ import Logic.CleanerLogic;
 
 /**
  * The main GUI for Folder Cleaner.
- * * @author Emmett Grebe
- * @version 3-15-2026
+ * @author Emmett Grebe
+ * @version 4-13-2026
  */
 public class CleanerGUI implements ActionListener {
     // Swing components:
@@ -59,6 +59,9 @@ public class CleanerGUI implements ActionListener {
     private String aboutText = ""; // Empty to avoid null.
     private String guideText = ""; // Empty to avoid null.
 
+    /**
+     * Makes the whole GUI. Calls functions to set up each piece.
+     */
     public void makeGUI() {
         makeFrame();
         makeTopMenu();
@@ -69,6 +72,9 @@ public class CleanerGUI implements ActionListener {
         frame.setVisible(true);
     }
 
+    /**
+     * Makes the frame for the whole program.
+     */
     private void makeFrame() {
         frame = new JFrame(frameTitleStr);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -91,6 +97,9 @@ public class CleanerGUI implements ActionListener {
         }
     }
 
+    /**
+     * Makes the top menu.
+     */
     private void makeTopMenu() {
         topMenuBar = new JMenuBar();
         configMenu = new JMenu(configStr);
@@ -135,7 +144,7 @@ public class CleanerGUI implements ActionListener {
         titlePanel = new JPanel(new BorderLayout());
         titlePanel.setBackground(paddingColor);
 
-        // 1. Setup Undo Button
+        // Setup Undo Button
         undoBtn = new JButton();
         undoBtn.setActionCommand(undoStr);
         undoBtn.addActionListener(this);
@@ -154,10 +163,10 @@ public class CleanerGUI implements ActionListener {
             System.err.println("Could not load undo icon.");
         }
 
-        // 2. Setup Title Label
+        // Setup Title Label
         titleLabel = new JLabel(titleStr, SwingConstants.CENTER);
 
-        // 3. Setup Filler (The secret to centering)
+        // Setup filler to center it
         // This is invisible but takes up the same 50px width as the undoBtn
         Box.Filler rightFiller = (Box.Filler) Box.createRigidArea(new Dimension(50, 40));
 
@@ -169,6 +178,9 @@ public class CleanerGUI implements ActionListener {
         frame.add(titlePanel, BorderLayout.PAGE_START);
     }
 
+    /**
+     * Makes the padding around the edges of the GUI.
+     */
     private void makePadding() {
         JPanel paddingLeft = new JPanel();
         JPanel paddingRight = new JPanel();
@@ -182,6 +194,9 @@ public class CleanerGUI implements ActionListener {
         frame.add(paddingBottom, BorderLayout.PAGE_END);
     }
 
+    /**
+     * Makes the folder selector area. This is the area in the middle.
+     */
     private void makeFolderSelector() {
         selectContainer = new GradientPanel(gradientColor1, gradientColor2, new Point(0, 0),
                 new Point(frame.getWidth(), frame.getHeight()));
@@ -226,14 +241,23 @@ public class CleanerGUI implements ActionListener {
         }
     }
 
+    /**
+     * Handles about being clicked. Shows the about text.
+     */
     private void handleAbout() {
         JOptionPane.showMessageDialog(frame, new JLabel(aboutText), "About", JOptionPane.INFORMATION_MESSAGE);
     }
 
+    /**
+     * Handles guide being clicked. Shows the guide text.
+     */
     private void handleGuide() {
         JOptionPane.showMessageDialog(frame, new JLabel(guideText), "Guide", JOptionPane.INFORMATION_MESSAGE);
     }
 
+    /**
+     * Handles config. Opens the config file directly.
+     */
     private void handleOpenConfig() {
         File configFile = new File(CleanerConstants.userConfigPath.toString());
         try {
@@ -243,6 +267,9 @@ public class CleanerGUI implements ActionListener {
         }
     }
 
+    /**
+     * Handles choose folder being clicked. Opens a choose directory dialog.
+     */
     private void handleChooseFolder() {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -262,6 +289,9 @@ public class CleanerGUI implements ActionListener {
         }
     }
 
+    /**
+     * Handles current folder being clicked. Cleans the current folder of the program.
+     */
     private void handleCurrFolder() {
         if (JOptionPane.showConfirmDialog(frame, confirmText, confirmTitle, JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             try {
