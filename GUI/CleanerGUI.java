@@ -306,6 +306,9 @@ public class CleanerGUI implements ActionListener {
         }
     }
 
+    /**
+     * Handles undo being clicked.
+     */
     private void handleUndo() {
         CleanerLogic.undoClean();
         JOptionPane.showMessageDialog(frame, "Last action undone.", popUpTitle, JOptionPane.INFORMATION_MESSAGE);
