@@ -7,15 +7,15 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 
-import Logic.CleanerConstants;
-import Logic.CleanerLogic;
+import Logic.SorterConstants;
+import Logic.SorterLogic;
 
 /**
- * The main GUI for Folder Cleaner.
+ * The main GUI for Folder Sorter.
  * @author Emmett Grebe
  * @version 4-13-2026
  */
-public class CleanerGUI implements ActionListener {
+public class SorterGUI implements ActionListener {
     // Swing components:
     private JButton chooseBtn, currentBtn, undoBtn; 
     private JFrame frame;
@@ -43,18 +43,18 @@ public class CleanerGUI implements ActionListener {
     // Strings:
     private final String aboutStr = "About";
     private final String configStr = "Configuration";
-    private final String confirmText = "Do not turn off this program or computer while it is cleaning. Are you sure you want to continue?";
+    private final String confirmText = "Do not turn off this program or computer while it is sorting. Are you sure you want to continue?";
     private final String confirmTitle = "Are you sure?";
     private final String currentFolderStr = "<html>Use the folder the <br>program is in</html>";
     private final String undoStr = "Undo"; 
     private final String errorTitle = "Error";
     private final String folderChooseStr = "Select a folder";
-    private final String frameTitleStr = "Folder Cleaner";
+    private final String frameTitleStr = "Folder Sorter";
     private final String guideStr = "Guide";
     private final String helpStr = "Help";
     private final String openConfigStr = "Open configuration";
-    private final String popUpTitle = "Folder Cleaner Result";
-    private final String titleStr = "Welcome to Folder Cleaner";
+    private final String popUpTitle = "Folder Sorter Result";
+    private final String titleStr = "Welcome to Folder Sorter";
 
     private String aboutText = ""; // Empty to avoid null.
     private String guideText = ""; // Empty to avoid null.
@@ -89,7 +89,7 @@ public class CleanerGUI implements ActionListener {
             if (result == JOptionPane.OK_OPTION) frame.dispose();
         }
 
-        InputStream imgStream = getClass().getResourceAsStream(CleanerConstants.iconPath);
+        InputStream imgStream = getClass().getResourceAsStream(SorterConstants.iconPath);
         try {
             if (imgStream != null) frame.setIconImage(ImageIO.read(imgStream));
         } catch (IOException e) {
@@ -126,9 +126,9 @@ public class CleanerGUI implements ActionListener {
         frame.setJMenuBar(topMenuBar);
 
         try {
-            InputStream isAbout = CleanerGUI.class.getResourceAsStream(CleanerConstants.aboutTextPath);
+            InputStream isAbout = SorterGUI.class.getResourceAsStream(SorterConstants.aboutTextPath);
             BufferedReader brAbout = new BufferedReader(new InputStreamReader(isAbout));
-            InputStream isGuide = CleanerGUI.class.getResourceAsStream(CleanerConstants.guideTextPath);
+            InputStream isGuide = SorterGUI.class.getResourceAsStream(SorterConstants.guideTextPath);
             BufferedReader brGuide = new BufferedReader(new InputStreamReader(isGuide));
             while (brAbout.ready()) aboutText += brAbout.readLine();
             while (brGuide.ready()) guideText += brGuide.readLine();
@@ -259,7 +259,7 @@ public class CleanerGUI implements ActionListener {
      * Handles config. Opens the config file directly.
      */
     private void handleOpenConfig() {
-        File configFile = new File(CleanerConstants.userConfigPath.toString());
+        File configFile = new File(SorterConstants.userConfigPath.toString());
         try {
             Desktop.getDesktop().open(configFile);
         } catch (IOException e) {
@@ -274,33 +274,33 @@ public class CleanerGUI implements ActionListener {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         try {
-            fileChooser.setCurrentDirectory(new File(CleanerGUI.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()));
+            fileChooser.setCurrentDirectory(new File(SorterGUI.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()));
         } catch (Exception e) {}
         
         if (fileChooser.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
             if (JOptionPane.showConfirmDialog(frame, confirmText, confirmTitle, JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 File selectedFolder = fileChooser.getSelectedFile();
-                if (CleanerLogic.cleanThere(selectedFolder.getAbsolutePath())) {
-                    JOptionPane.showMessageDialog(frame, "Cleaned successfully.", popUpTitle, JOptionPane.INFORMATION_MESSAGE);
+                if (SorterLogic.sortThere(selectedFolder.getAbsolutePath())) {
+                    JOptionPane.showMessageDialog(frame, "Sorted successfully.", popUpTitle, JOptionPane.INFORMATION_MESSAGE);
                 } else {
-                    JOptionPane.showMessageDialog(frame, "Cleanup failed.", popUpTitle, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frame, "Sortup failed.", popUpTitle, JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
     }
 
     /**
-     * Handles current folder being clicked. Cleans the current folder of the program.
+     * Handles current folder being clicked. Sorts the current folder of the program.
      */
     private void handleCurrFolder() {
         if (JOptionPane.showConfirmDialog(frame, confirmText, confirmTitle, JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             try {
-                File jarFile = new File(CleanerGUI.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+                File jarFile = new File(SorterGUI.class.getProtectionDomain().getCodeSource().getLocation().toURI());
                 String currDirectory = jarFile.getParent();
-                if (CleanerLogic.cleanThere(currDirectory)) {
-                    JOptionPane.showMessageDialog(frame, "Cleaned successfully.", popUpTitle, JOptionPane.INFORMATION_MESSAGE);
+                if (SorterLogic.sortThere(currDirectory)) {
+                    JOptionPane.showMessageDialog(frame, "Sorted successfully.", popUpTitle, JOptionPane.INFORMATION_MESSAGE);
                 } else {
-                    JOptionPane.showMessageDialog(frame, "Cleanup failed.", popUpTitle, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frame, "Sortup failed.", popUpTitle, JOptionPane.ERROR_MESSAGE);
                 }
             } catch (Exception e) {}
         }
@@ -310,7 +310,7 @@ public class CleanerGUI implements ActionListener {
      * Handles undo being clicked.
      */
     private void handleUndo() {
-        CleanerLogic.undoClean();
+        SorterLogic.undoSort();
         JOptionPane.showMessageDialog(frame, "Last action undone.", popUpTitle, JOptionPane.INFORMATION_MESSAGE);
     }
 }

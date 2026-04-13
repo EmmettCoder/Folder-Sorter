@@ -61,7 +61,7 @@ public class UndoObject {
 
     /**
      * Adds a folder made by the program to the list.
-     * This is only to be used when the folder was just made by the previous clean.
+     * This is only to be used when the folder was just made by the previous sort.
      * 
      * @param folderPath
      */
@@ -70,7 +70,7 @@ public class UndoObject {
     }
 
     /**
-     * Undoes the previous clean. Puts the files back, then deletes the folders
+     * Undoes the previous sort. Puts the files back, then deletes the folders
      * made.
      * 
      * @return True if successful, false otherwise.

@@ -3,11 +3,11 @@ import java.nio.file.Files;
 
 import javax.swing.JOptionPane;
 
-import GUI.CleanerGUI;
-import Logic.CleanerConstants;
+import GUI.SorterGUI;
+import Logic.SorterConstants;
 
 /**
- * The driver for Folder Cleaner.
+ * The driver for Folder Sorter.
  * 
  * @author Emmett Grebe
  * @version 3-15-2026
@@ -21,12 +21,12 @@ public class Driver {
      */
     public static void main(String[] args) {
         try {
-            Files.createDirectories(CleanerConstants.userDocumentsPath); // Make the Folder-Sorter folder if it does not
+            Files.createDirectories(SorterConstants.userDocumentsPath); // Make the Folder-Sorter folder if it does not
                                                                          // already exist.
-            InputStream is = Driver.class.getResourceAsStream(CleanerConstants.defaultConfigPath);
+            InputStream is = Driver.class.getResourceAsStream(SorterConstants.defaultConfigPath);
 
-            if (Files.notExists(CleanerConstants.userConfigPath)) {    // Copy Config.txt without replacing old one.
-                Files.copy(is, CleanerConstants.userConfigPath);
+            if (Files.notExists(SorterConstants.userConfigPath)) {    // Copy Config.txt without replacing old one.
+                Files.copy(is, SorterConstants.userConfigPath);
             } 
         } catch (IOException e) {
             int result = JOptionPane.showConfirmDialog(null,
@@ -38,7 +38,7 @@ public class Driver {
         }
 
         // Make and show the GUI.
-        CleanerGUI cGUI = new CleanerGUI();
+        SorterGUI cGUI = new SorterGUI();
         cGUI.makeGUI();
     }
 

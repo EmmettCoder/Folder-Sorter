@@ -4,12 +4,12 @@ Sorts a given folder.
 # How to use
 ## Select a folder
 Click this button to select a folder that the program is not currently in.
-Then select the folder you would like to clean.
+Then select the folder you would like to sort.
 ## Use the folder the program is in
-Click this button to clean the folder that the program is currently in.
-For example, if Folder-Cleaner.jar is in your Downloads folder, it will clean the Downloads folder.
+Click this button to sort the folder that the program is currently in.
+For example, if Folder-Sort.jar is in your Downloads folder, it will sort the Downloads folder.
 ## Configuration
-To change the configuration, navigate to your Documents/Folder-Cleaner/Config.txt.
+To change the configuration, navigate to your Documents/Folder-Sorter/Config.txt.
 Formatting goes as follows:
 `Extension = Folder`
 

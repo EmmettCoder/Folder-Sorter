@@ -7,21 +7,21 @@ import Objects.Config.ConfigObject;
 import Objects.Undo.UndoObject;
 
 /**
- * Handles all cleaning logic.
+ * Handles all sorting logic.
  * 
  * @author Emmett Grebe
  * @version 4-13-2026
  */
-public class CleanerLogic {
+public class SorterLogic {
     private static ConfigObject co;
     private static UndoObject uo;
 
     /**
-     * Cleans the given folder.
+     * Sorts the given folder.
      * 
      * @param folderPath
      */
-    public static boolean cleanThere(String directory) {
+    public static boolean sortThere(String directory) {
         co = new ConfigObject();
         uo = new UndoObject();
         File[] files = new File(directory).listFiles();     // All files in the directory.
@@ -73,9 +73,9 @@ public class CleanerLogic {
                                     int newNum = oldNum + 1;
 
                                     
-                                    String cleanBaseName = baseName.substring(0, lastOpenParen).trim();   // Strip the old (n) from the base name
+                                    String sortBaseName = baseName.substring(0, lastOpenParen).trim();   // Strip the old (n) from the base name
 
-                                    newName = cleanBaseName + " (" + newNum + ")." + extension;
+                                    newName = sortBaseName + " (" + newNum + ")." + extension;
                                     destination = Paths.get(destBeginning + 
                                                             File.separator + 
                                                             destFolder + 
@@ -113,10 +113,10 @@ public class CleanerLogic {
     }
 
     /**
-     * Undoes previous clean.
+     * Undoes previous sort.
      * @return True if successful, false if not.
      */
-    public static boolean undoClean() {
+    public static boolean undoSort() {
         if (uo == null) return false;
         return uo.undoAll();
     }

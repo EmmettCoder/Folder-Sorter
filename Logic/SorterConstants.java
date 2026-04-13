@@ -8,7 +8,7 @@ import java.nio.file.*;
  * @author Emmett Grebe
  * @version 3-15-2026
  */
-public class CleanerConstants {
+public class SorterConstants {
     public final static Path userDocumentsPath = Paths.get(System.getProperty("user.home") + File.separator + "Documents" + File.separator + "Folder-Sorter");
     public final static Path userConfigPath = Paths.get(userDocumentsPath.toString() + File.separator + "Config.txt");  
 

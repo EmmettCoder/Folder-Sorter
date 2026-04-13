@@ -3,10 +3,10 @@ package Objects.Config;
 import java.io.*;
 import java.util.*;
 
-import Logic.CleanerConstants;
+import Logic.SorterConstants;
 
 /**
- * Config object for Folder Cleaner. Using this instead of a normal hashmap so
+ * Config object for Folder Sorter. Using this instead of a normal hashmap so
  * it will be immutable. Once the object is made, the hashmap is inaccessible.
  * This object has it's read functionality built in, instead of having a
  * ConfigReader. This is because the logic in both are so small it makes more
@@ -23,12 +23,12 @@ public class ConfigObject {
      * Default constructor. Reads from the file.
      */
     public ConfigObject() {
-        try (BufferedReader br = new BufferedReader(new FileReader(CleanerConstants.userConfigPath.toString()))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(SorterConstants.userConfigPath.toString()))) {
             Map<String, String> newFolderNames = new HashMap<>();
 
             while (br.ready()) {
                 String currLine = br.readLine();
-                // Skips newlines. So the config file can be clean looking.
+                // Skips newlines. So the config file can be sort looking.
                 // Also skips pound signs for comments in the config file.
                 if ((currLine.length() > 0) && !(currLine.charAt(0) == '#')) {
                     String[] splitLine = currLine.split(" = ");
