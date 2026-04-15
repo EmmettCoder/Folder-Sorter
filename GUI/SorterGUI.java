@@ -13,7 +13,7 @@ import Logic.SorterLogic;
 /**
  * The main GUI for Folder Sorter.
  * @author Emmett Grebe
- * @version 4-13-2026
+ * @version 4-15-2026
  */
 public class SorterGUI implements ActionListener {
     // Swing components:
@@ -33,8 +33,6 @@ public class SorterGUI implements ActionListener {
     private final Color gradientColor1 = new Color(102, 183, 255);
     private final Color gradientColor2 = new Color(0, 135, 255);
     private final Color paddingColor = new Color(191, 216, 255);
-    private final Color topMenuColor = new Color(167, 173, 130);
-    private final Color topMenuOptionColor = new Color(231, 240, 180);
 
     private final Dimension btnSize = new Dimension(200, 100);
     private final Dimension frameStartSize = new Dimension(500, 600);
@@ -107,27 +105,30 @@ public class SorterGUI implements ActionListener {
      */
     private void makeTopMenu() {
         topMenuBar = new JMenuBar();
+        
         configMenu = new JMenu(configStr);
-        openConfigMenuItem = new JMenuItem(openConfigStr);
         helpMenu = new JMenu(helpStr);
+        nameSortMenu = new JMenu(nameSortStr);
+
+        // Configuration
+        openConfigMenuItem = new JMenuItem(openConfigStr);
+        // Help
         aboutMenuItem = new JMenuItem(aboutStr);
         guideMenuItem = new JMenuItem(guideStr);
-        nameSortMenu = new JMenu(nameSortStr);
+        // Name Sort
         aboutNameSortItem = new JMenuItem(aboutNameSortStr);
+        turnOffName = new JMenuItem(turnOffNameStr);
+        turnOnName = new JMenuItem(turnOnNameStr);
 
         openConfigMenuItem.addActionListener(this);
         aboutMenuItem.addActionListener(this);
         guideMenuItem.addActionListener(this);
         aboutNameSortItem.addActionListener(this);
 
-        configMenu.setBackground(topMenuColor);
-        openConfigMenuItem.setBackground(topMenuOptionColor);
-        topMenuBar.setBackground(topMenuColor);
-        aboutMenuItem.setBackground(topMenuOptionColor);
-        guideMenuItem.setBackground(topMenuOptionColor);
-
         configMenu.add(openConfigMenuItem);
         nameSortMenu.add(aboutNameSortItem);
+        nameSortMenu.add(turnOnName);
+        nameSortMenu.add(turnOffName);
         helpMenu.add(aboutMenuItem);
         helpMenu.add(guideMenuItem);
         topMenuBar.add(configMenu);
