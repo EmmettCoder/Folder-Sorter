@@ -22,7 +22,7 @@ public class SorterGUI implements ActionListener {
     private JLabel titleLabel;
     private JMenuBar topMenuBar;
     private JMenu configMenu, nameSortMenu, helpMenu;
-    private JMenuItem openConfigMenuItem, aboutNameSortItem, aboutMenuItem, guideMenuItem;
+    private JMenuItem openConfigMenuItem, aboutNameSortItem, turnOnName, turnOffName, aboutMenuItem, guideMenuItem;
     private JPanel titlePanel, padding;
     private GradientPanel selectContainer;
 
@@ -57,6 +57,8 @@ public class SorterGUI implements ActionListener {
     private final String openConfigStr = "Open configuration";
     private final String popUpTitle = "Folder Sorter Result";
     private final String titleStr = "Welcome to Folder Sorter";
+    private final String turnOffNameStr = "Turn off Name Sort";
+    private final String turnOnNameStr = "Turn on Name Sort";
 
     private String aboutText = ""; // Empty to avoid null.
     private String guideText = ""; // Empty to avoid null.
@@ -116,6 +118,7 @@ public class SorterGUI implements ActionListener {
         openConfigMenuItem.addActionListener(this);
         aboutMenuItem.addActionListener(this);
         guideMenuItem.addActionListener(this);
+        aboutNameSortItem.addActionListener(this);
 
         configMenu.setBackground(topMenuColor);
         openConfigMenuItem.setBackground(topMenuOptionColor);
@@ -141,7 +144,7 @@ public class SorterGUI implements ActionListener {
             BufferedReader brNameSort = new BufferedReader(new InputStreamReader(isNameSort));
             while (brAbout.ready()) aboutText += brAbout.readLine();
             while (brGuide.ready()) guideText += brGuide.readLine();
-            while (brGuide.ready()) nameSortText += brNameSort.readLine();
+            while (brNameSort.ready()) nameSortText += brNameSort.readLine();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -245,6 +248,7 @@ public class SorterGUI implements ActionListener {
             case openConfigStr: handleOpenConfig(); break;
             case aboutStr: handleAbout(); break;
             case guideStr: handleGuide(); break;
+            case aboutNameSortStr: handleAboutNameSort(); break;
             case folderChooseStr: handleChooseFolder(); break;
             case currentFolderStr: handleCurrFolder(); break;
             case undoStr: handleUndo(); break;
@@ -263,6 +267,13 @@ public class SorterGUI implements ActionListener {
      */
     private void handleGuide() {
         JOptionPane.showMessageDialog(frame, new JLabel(guideText), "Guide", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    /**
+     * Handles about Name Sort being clicked. Shows the guide text for Name Sort.
+     */
+    private void handleAboutNameSort() {
+        JOptionPane.showMessageDialog(frame, new JLabel(nameSortText), "About Name Sort", JOptionPane.INFORMATION_MESSAGE);
     }
 
     /**

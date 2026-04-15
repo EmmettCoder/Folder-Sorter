@@ -6,7 +6,7 @@ import java.nio.file.*;
  * A space to put all the constants for the classes.
  * 
  * @author Emmett Grebe
- * @version 3-15-2026
+ * @version 4-15-2026
  */
 public class SorterConstants {
     public final static Path userDocumentsPath = Paths.get(System.getProperty("user.home") + File.separator + "Documents" + File.separator + "Folder-Sorter");
