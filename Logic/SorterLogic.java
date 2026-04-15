@@ -143,10 +143,13 @@ public class SorterLogic {
                 }
             }
         }
-        // Remove single files.
+
+        // Remove single files. Making a new map and deleting the old one. Cannot edit while iterating.
+        Map<String, ArrayList<File>> likenessNoDupes = new HashMap<>();
         for (String threshString : likeness.keySet()) {
-            if (likeness.get(threshString).size() < 1) likeness.remove(threshString);
+            if (likeness.get(threshString).size() > 1) likenessNoDupes.put(threshString, likeness.get(threshString));
         }
+
 
         // Logic.
         for (File f : files) {
@@ -169,7 +172,7 @@ public class SorterLogic {
                                                      File.separator + 
                                                      f.getName());
                         String threshPortion = f.getName().substring(0, similarityThreshold);
-                        if (likeness.keySet().contains(threshPortion)) {
+                        if (likenessNoDupes.keySet().contains(threshPortion)) {
                             source = Paths.get(f.getAbsolutePath());   // Path of the file.
                             destination = Paths.get(destBeginning +    // Path of where the file will go.
                                                      File.separator + 
@@ -178,6 +181,13 @@ public class SorterLogic {
                                                      threshPortion +
                                                      File.separator + 
                                                      f.getName());
+                            try {
+                                // Creates the 'threshPortion' folder if it doesn't exist
+                                Files.createDirectories(destination.getParent());
+                                uo.addFolderMade(destination.getParent()); 
+                            } catch (IOException e) {
+                                System.err.println("Could not create similarity folder: " + e.getMessage());
+                            }
                         }
 
                         try {

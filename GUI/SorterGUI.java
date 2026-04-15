@@ -51,6 +51,7 @@ public class SorterGUI implements ActionListener {
     private final String frameTitleStr = "Folder Sorter";
     private final String guideStr = "Guide";
     private final String helpStr = "Help";
+    private final String nameSortOnOffTitle = "Name Sort Condition";
     private final String nameSortStr = "Name Sort";
     private final String openConfigStr = "Open configuration";
     private final String popUpTitle = "Folder Sorter Result";
@@ -61,6 +62,10 @@ public class SorterGUI implements ActionListener {
     private String aboutText = ""; // Empty to avoid null.
     private String guideText = ""; // Empty to avoid null.
     private String nameSortText = ""; // Empty to avoid null.
+
+    private boolean useNameSort = false;
+
+    private int threshold = 0;
 
     /**
      * Makes the whole GUI. Calls functions to set up each piece.
@@ -121,7 +126,11 @@ public class SorterGUI implements ActionListener {
         turnOnName = new JMenuItem(turnOnNameStr);
 
         openConfigMenuItem.addActionListener(this);
+
         aboutMenuItem.addActionListener(this);
+        turnOffName.addActionListener(this);
+        turnOnName.addActionListener(this);
+
         guideMenuItem.addActionListener(this);
         aboutNameSortItem.addActionListener(this);
 
@@ -250,6 +259,8 @@ public class SorterGUI implements ActionListener {
             case aboutStr: handleAbout(); break;
             case guideStr: handleGuide(); break;
             case aboutNameSortStr: handleAboutNameSort(); break;
+            case turnOffNameStr: handleTurnOffName(); break;
+            case turnOnNameStr: handleTurnOnName(); break;
             case folderChooseStr: handleChooseFolder(); break;
             case currentFolderStr: handleCurrFolder(); break;
             case undoStr: handleUndo(); break;
@@ -278,6 +289,39 @@ public class SorterGUI implements ActionListener {
     }
 
     /**
+     * Handles turning on Name Sort. Takes the threshold number and stores it.
+     */
+    private void handleTurnOnName() {
+        String thresholdInput = JOptionPane.showInputDialog("Input the threshold of alike characters. For more information select About Name Sort");
+        if (thresholdInput != null) {
+            this.useNameSort = true;
+            try {
+                if (Integer.parseInt(thresholdInput) < 1) {
+                    JOptionPane.showMessageDialog(frame, "Please enter a positive number larger than 1.", nameSortOnOffTitle, JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    this.threshold = Integer.parseInt(thresholdInput);
+                    JOptionPane.showMessageDialog(frame, "Name Sort is now on with a threshold of " + threshold, nameSortOnOffTitle, JOptionPane.INFORMATION_MESSAGE);
+                }
+            } catch (NumberFormatException nfe) {
+                JOptionPane.showMessageDialog(frame, "Please enter a valid number.", nameSortOnOffTitle, JOptionPane.INFORMATION_MESSAGE);
+            }
+        } 
+    }
+
+    /**
+     * Handles turning off Name Sort.
+     */
+    private void handleTurnOffName() {
+        
+        if (useNameSort) {
+            this.useNameSort = false;
+            JOptionPane.showMessageDialog(frame, "Name Sort is now off", nameSortOnOffTitle, JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(frame, "Name Sort was already off", nameSortOnOffTitle, JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    /**
      * Handles config. Opens the config file directly.
      */
     private void handleOpenConfig() {
@@ -302,10 +346,18 @@ public class SorterGUI implements ActionListener {
         if (fileChooser.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
             if (JOptionPane.showConfirmDialog(frame, confirmText, confirmTitle, JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 File selectedFolder = fileChooser.getSelectedFile();
-                if (SorterLogic.sortThere(selectedFolder.getAbsolutePath())) {
-                    JOptionPane.showMessageDialog(frame, "Sorted successfully.", popUpTitle, JOptionPane.INFORMATION_MESSAGE);
+                if (useNameSort) {
+                    if (SorterLogic.sortThereSimilar(selectedFolder.getAbsolutePath(), threshold)) {
+                        JOptionPane.showMessageDialog(frame, "Sorted using Name Sort successfully.", popUpTitle, JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(frame, "Sort failed.", popUpTitle, JOptionPane.ERROR_MESSAGE);
+                    }
                 } else {
-                    JOptionPane.showMessageDialog(frame, "Sortup failed.", popUpTitle, JOptionPane.ERROR_MESSAGE);
+                    if (SorterLogic.sortThere(selectedFolder.getAbsolutePath())) {
+                        JOptionPane.showMessageDialog(frame, "Sorted successfully.", popUpTitle, JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(frame, "Sort failed.", popUpTitle, JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             }
         }
