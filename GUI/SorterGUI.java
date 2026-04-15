@@ -21,8 +21,8 @@ public class SorterGUI implements ActionListener {
     private JFrame frame;
     private JLabel titleLabel;
     private JMenuBar topMenuBar;
-    private JMenu configMenu, helpMenu;
-    private JMenuItem openConfigMenuItem, aboutMenuItem, guideMenuItem;
+    private JMenu configMenu, nameSortMenu, helpMenu;
+    private JMenuItem openConfigMenuItem, aboutNameSortItem, aboutMenuItem, guideMenuItem;
     private JPanel titlePanel, padding;
     private GradientPanel selectContainer;
 
@@ -42,6 +42,7 @@ public class SorterGUI implements ActionListener {
 
     // Strings:
     private final String aboutStr = "About";
+    private final String aboutNameSortStr = "About Name Sort";
     private final String configStr = "Configuration";
     private final String confirmText = "Do not turn off this program or computer while it is sorting. Are you sure you want to continue?";
     private final String confirmTitle = "Are you sure?";
@@ -52,12 +53,14 @@ public class SorterGUI implements ActionListener {
     private final String frameTitleStr = "Folder Sorter";
     private final String guideStr = "Guide";
     private final String helpStr = "Help";
+    private final String nameSortStr = "Name Sort";
     private final String openConfigStr = "Open configuration";
     private final String popUpTitle = "Folder Sorter Result";
     private final String titleStr = "Welcome to Folder Sorter";
 
     private String aboutText = ""; // Empty to avoid null.
     private String guideText = ""; // Empty to avoid null.
+    private String nameSortText = ""; // Empty to avoid null.
 
     /**
      * Makes the whole GUI. Calls functions to set up each piece.
@@ -107,6 +110,8 @@ public class SorterGUI implements ActionListener {
         helpMenu = new JMenu(helpStr);
         aboutMenuItem = new JMenuItem(aboutStr);
         guideMenuItem = new JMenuItem(guideStr);
+        nameSortMenu = new JMenu(nameSortStr);
+        aboutNameSortItem = new JMenuItem(aboutNameSortStr);
 
         openConfigMenuItem.addActionListener(this);
         aboutMenuItem.addActionListener(this);
@@ -119,9 +124,11 @@ public class SorterGUI implements ActionListener {
         guideMenuItem.setBackground(topMenuOptionColor);
 
         configMenu.add(openConfigMenuItem);
+        nameSortMenu.add(aboutNameSortItem);
         helpMenu.add(aboutMenuItem);
         helpMenu.add(guideMenuItem);
         topMenuBar.add(configMenu);
+        topMenuBar.add(nameSortMenu);
         topMenuBar.add(helpMenu);
         frame.setJMenuBar(topMenuBar);
 
@@ -130,8 +137,11 @@ public class SorterGUI implements ActionListener {
             BufferedReader brAbout = new BufferedReader(new InputStreamReader(isAbout));
             InputStream isGuide = SorterGUI.class.getResourceAsStream(SorterConstants.guideTextPath);
             BufferedReader brGuide = new BufferedReader(new InputStreamReader(isGuide));
+            InputStream isNameSort = SorterGUI.class.getResourceAsStream(SorterConstants.nameSortTextPath);
+            BufferedReader brNameSort = new BufferedReader(new InputStreamReader(isNameSort));
             while (brAbout.ready()) aboutText += brAbout.readLine();
             while (brGuide.ready()) guideText += brGuide.readLine();
+            while (brGuide.ready()) nameSortText += brNameSort.readLine();
         } catch (Exception e) {
             e.printStackTrace();
         }

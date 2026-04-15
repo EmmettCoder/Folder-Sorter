@@ -16,4 +16,5 @@ public class SorterConstants {
     public final static String aboutTextPath = "/Assets/About.html";
     public final static String guideTextPath = "/Assets/Guide.html";
     public final static String iconPath = "/Assets/Icon.png";    
+    public final static String nameSortTextPath = "/Assets/NameSortAbout.html";
 }
