@@ -131,7 +131,7 @@ public class SorterLogic {
         Map<String, ArrayList<File>> likeness = new HashMap<>();
         for (File f : files) {
             if (!f.isDirectory()) {
-                String threshPortion = f.getName().substring(0, similarityThreshold);
+                String threshPortion = f.getName().substring(0, similarityThreshold).trim();
                 if (likeness.keySet().contains(threshPortion)) {
                     // If the map already has the word, add it to the value.
                     likeness.get(threshPortion).add(f);
@@ -249,6 +249,26 @@ public class SorterLogic {
         }
 
         return true;
+    }
+
+    /**
+     * Helper function to get just the threshold portion of a file name.
+     * 
+     * @param f The file to be used.
+     * @param similarityThreshold The threshold of similarity.
+     * @return A String of just the threshold portion of a file name.
+     */
+    private String getThreshPortion(File f, int similarityThreshold) {
+        int extensionIndex = f.getName().lastIndexOf(".");
+        String nameNoExtension = f.getName().substring(0, extensionIndex);
+        if (nameNoExtension.length() < similarityThreshold) {
+            // If the name is too short, just return the name as it is in the threshold.
+            return nameNoExtension;
+        } else {
+            // Else cut out just the threshold portion.
+            String threshPortion = nameNoExtension.substring(0, similarityThreshold).trim();
+            return threshPortion;
+        }
     }
 
     /**
