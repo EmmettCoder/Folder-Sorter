@@ -131,7 +131,7 @@ public class SorterLogic {
         Map<String, ArrayList<File>> likeness = new HashMap<>();
         for (File f : files) {
             if (!f.isDirectory()) {
-                String threshPortion = f.getName().substring(0, similarityThreshold).trim();
+                String threshPortion = getThreshPortion(f, similarityThreshold);
                 if (likeness.keySet().contains(threshPortion)) {
                     // If the map already has the word, add it to the value.
                     likeness.get(threshPortion).add(f);
@@ -171,7 +171,7 @@ public class SorterLogic {
                                                      destFolder + 
                                                      File.separator + 
                                                      f.getName());
-                        String threshPortion = f.getName().substring(0, similarityThreshold);
+                        String threshPortion = getThreshPortion(f, similarityThreshold);
                         if (likenessNoDupes.keySet().contains(threshPortion)) {
                             source = Paths.get(f.getAbsolutePath());   // Path of the file.
                             destination = Paths.get(destBeginning +    // Path of where the file will go.
@@ -258,15 +258,19 @@ public class SorterLogic {
      * @param similarityThreshold The threshold of similarity.
      * @return A String of just the threshold portion of a file name.
      */
-    private String getThreshPortion(File f, int similarityThreshold) {
+    private static String getThreshPortion(File f, int similarityThreshold) {
         int extensionIndex = f.getName().lastIndexOf(".");
-        String nameNoExtension = f.getName().substring(0, extensionIndex);
+        String nameNoExtension = f.getName();
+        if (extensionIndex != -1) {
+            // If the file name has an extension. Else it is already extensionless.
+            nameNoExtension = f.getName().substring(0, extensionIndex);
+        }
         if (nameNoExtension.length() < similarityThreshold) {
             // If the name is too short, just return the name as it is in the threshold.
             return nameNoExtension;
         } else {
             // Else cut out just the threshold portion.
-            String threshPortion = nameNoExtension.substring(0, similarityThreshold).trim();
+            String threshPortion = nameNoExtension.substring(0, similarityThreshold - 1).trim();
             return threshPortion;
         }
     }
