@@ -44,7 +44,7 @@ public abstract class FileNameHelper {
         
         if (extensionIndex == -1) {
             // If file has no extension.
-            return fullName;
+            return " ";
         } else {
             // If file does have an extension.
             return fullName.substring(extensionIndex + 1);

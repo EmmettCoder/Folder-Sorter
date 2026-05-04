@@ -5,12 +5,13 @@ import java.util.*;
 
 import Objects.Config.ConfigObject;
 import Objects.Undo.UndoObject;
+import Logic.FileNameHelper;
 
 /**
  * Handles all sorting logic.
  * 
  * @author Emmett Grebe
- * @version 4-13-2026
+ * @version 4-18-2026
  */
 public class SorterLogic {
     private static ConfigObject co;
@@ -131,7 +132,9 @@ public class SorterLogic {
         Map<String, ArrayList<File>> likeness = new HashMap<>();
         for (File f : files) {
             if (!f.isDirectory()) {
-                String threshPortion = getThreshPortion(f, similarityThreshold);
+                String filetype = FileNameHelper.getExtension(f);
+
+                String threshPortion = getThreshPortion(f, similarityThreshold) + "." + filetype;
                 if (likeness.keySet().contains(threshPortion)) {
                     // If the map already has the word, add it to the value.
                     likeness.get(threshPortion).add(f);
@@ -172,7 +175,7 @@ public class SorterLogic {
                                                      File.separator + 
                                                      f.getName());
                         String threshPortion = getThreshPortion(f, similarityThreshold);
-                        if (likenessNoDupes.keySet().contains(threshPortion)) {
+                        if (likenessNoDupes.keySet().contains(threshPortion + "." + FileNameHelper.getExtension(f))) {
                             source = Paths.get(f.getAbsolutePath());   // Path of the file.
                             destination = Paths.get(destBeginning +    // Path of where the file will go.
                                                      File.separator + 
