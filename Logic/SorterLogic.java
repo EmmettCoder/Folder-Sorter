@@ -299,7 +299,7 @@ public class SorterLogic {
             return nameNoExtension;
         } else {
             // Else cut out just the threshold portion.
-            String threshPortion = nameNoExtension.substring(0, similarityThreshold - 1).trim();
+            String threshPortion = nameNoExtension.substring(0, similarityThreshold).trim();
             return threshPortion;
         }
     }
