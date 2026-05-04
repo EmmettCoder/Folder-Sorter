@@ -6,7 +6,7 @@ import java.io.File;
  * Helper for getting parts of the filename.
  * 
  * @author Emmett Grebe
- * @version 4-18-2026
+ * @version 5-4-2026
  */
 public abstract class FileNameHelper {
     /**

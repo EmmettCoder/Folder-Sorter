@@ -6,13 +6,12 @@ import java.util.*;
 
 import Objects.Config.ConfigObject;
 import Objects.Undo.UndoObject;
-import Logic.FileNameHelper;
 
 /**
  * Handles all sorting logic.
  * 
  * @author Emmett Grebe
- * @version 4-18-2026
+ * @version 5-4-2026
  */
 public class SorterLogic {
     private static ConfigObject co;
